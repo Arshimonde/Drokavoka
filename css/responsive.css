@@ -1,0 +1,50 @@
+/*GENERAL CSS START*/
+@media (max-width: 575.98px) {
+    html {
+      font-size: 15px;
+    }
+}
+/*GENERAL CSS END*/
+
+/*DASHBOARD START*/
+@media (max-width: 767.98px) {
+    .dashboard .main-navbar .navbar .notifications {
+      position: static;
+    }
+  
+    .dashboard .main-navbar .navbar .notifications .dropdown-menu {
+      min-width: 100% !important;
+      border-left: none;
+    }
+    .dashboard .main-navbar .navbar .notifications .dropdown-menu {
+        left: 0;
+        right: 0;
+    }
+    .dashboard .main-sidebar {
+        transform: translateX(-100%);
+        box-shadow: none;
+    }
+    .dashboard .main-sidebar__search {
+        box-sizing: border-box;
+        border-right: 0 !important;
+        padding: 0.625rem 0;
+        border-bottom: 1px solid #e1e5eb;
+    }
+
+    .dashboard .main-sidebar__search .input-group {
+        margin: 0 !important;
+    }
+    .dashboard .page-header .page-title {
+        font-size: 2rem;
+    }
+    .dashboard .page-header .page-subtitle {
+        font-size: 0.8125rem;
+        font-weight: 400;
+    }
+}
+@media (max-width: 991.98px) {
+    .dashboard .main-sidebar .navbar-brand {
+      font-size: 90%;
+    }
+}
+/*DASHBOARD END*/
