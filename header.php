@@ -26,5 +26,8 @@
         <script src="js/script.js"></script>
 </head>
 <body>
+    <!-- INCLUDE functions.php in all webapplication start -->
+    <?php include "functions.php"; ?>
+    <!-- INCLUDE functions.php in all webapplication end -->
     <nav>
     <!-- HEADER CONTENT HERE!!!! -->
