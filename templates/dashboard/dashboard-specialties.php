@@ -104,7 +104,7 @@ if(isset($is_inserted)):
         <!-- SPECIATLIES TABLE END -->
         <!-- ADD SPECIALITY FORM START -->
         <div class="col-lg-4">
-            <div class="card card-small mb-4">
+            <div class="card card-small mb-4 sticky-top" style="top:80px">
                 <div class="card-header border-bottom">
                     <h6 class="mb-0 d-flex">
                         <i class="material-icons mr-2">library_add</i>
