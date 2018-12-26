@@ -69,4 +69,14 @@ function db_select_all($table,$limit=null){
     return $table_data;
 }
 /* SELECT FROM DATABASE END*/
+/* DELETE FROM DATABASE START */
+function db_delete_row($table,$id){
+    global $app_db;
+    $query = "DELETE FROM ".$table." WHERE id = ".$id;
+    // var_dump($query);
+     $is_deleted = mysqli_query($app_db,$query);
+     if($is_deleted) return true;
+     return false;
+}
+/* DELETE FROM DATABASE END */
 ?>

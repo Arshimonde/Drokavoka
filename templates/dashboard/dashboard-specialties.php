@@ -7,33 +7,46 @@
         $elements["specialite_desc"] = $_POST["specialite_desc"];
         $is_inserted = db_insert("specialite",$elements);
     endif;
+    /* delete specialite */
+    if(isset($_GET["id"]) && isset($_GET["action"]) && $_GET["action"] == "delete"):
+        $is_deleted = db_delete_row("specialite",$_GET["id"]);
+    endif;
     /* get all specialite */
     $specialites = db_select_all("specialite");
-
 ?>
 <!-- SPECIALITES DATA MANAGMENT END-->
 
 <!-- NOTIFICATION  START-->
 <?php 
+/* insert */
 if(isset($is_inserted)):
-    $alert_type = "Succés";
+    $alert_type = "Ajout avec Succés";
     $alert_color = "info";
-    $message = "La spécialité ". $elements["specialite_name"] ."est bien inséré";
+    $message = "La spécialité ". $elements["specialite_name"] ." est bien inséré";
+    /* not inserted */
     if(!$is_inserted):
         $alert_type = "Attention";
         $alert_color = "warning";
         $message = "L'ajout du spécialité ".$elements["specialite_name"]." est échoué";
     endif;
-    ?>
-
-    <div class="alert alert-<?php echo $alert_color?> alert-dismissible fade show mb-0 rounded-0" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">×</span>
-        </button>
-        <i class="fa fa-info mx-2"></i>
-        <strong><?php echo $alert_type; ?>:</strong><?php echo $message ?>
-    </div>
+endif;
+/* deleted */
+if(isset($is_deleted) && $is_deleted):
+    $alert_type = "Suppression avec Succés";
+    $alert_color = "success";
+    $message = "La spécialité est bien suprimmer";
+endif;
+?>
+<?php if(isset($is_deleted) || isset($is_inserted)):?>
+<div class="alert alert-<?php echo $alert_color?> alert-dismissible fade show mb-0 rounded-0" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">×</span>
+    </button>
+    <i class="fa fa-info mx-2"></i>
+    <strong><?php echo $alert_type; ?>: </strong><?php echo $message ?>
+</div>
 <?php endif;?>
+
 <!-- NOTIFICATION END -->
 
 <!-- SPECIALITE MAIN CONTENT START -->
@@ -80,7 +93,7 @@ if(isset($is_inserted)):
                                         </td>
                                         <td>
                                             <button class="btn btn-secondary d-block mb-4 w-100">Modifier</button>
-                                            <button class="btn btn-danger d-block w-100">Suprimmer</button>
+                                            <button id="<?php echo $specialite["id"];?>" class="delete-speciality btn btn-danger d-block w-100">Suprimmer</button>
                                         </td>
                                     </tr>
                                 <?php
