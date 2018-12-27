@@ -69,6 +69,34 @@ function db_select_all($table,$limit=null){
     return $table_data;
 }
 /* SELECT FROM DATABASE END*/
+
+/* UPDATE TABLE IN DATABASE START */
+function db_update_row($table,$elements,$where){//elements keys should be as the same as in database
+    global $app_db;
+    $query = "UPDATE ".$table." SET ";
+    // asseign each column in data base a new value start
+    $sets = array();
+    foreach($elements as $key => $value):
+        array_push($sets,$key."= '".$value."'");
+    endforeach;
+    //concatenate each column = value with ","
+    $query .= implode(", ",$sets);
+    //where testing 
+    if(isset($where)):
+        if(strpos(strtolower($where),"where")!==false)
+        $query .= $where;
+        else 
+        $query .= "WHERE ".$where;
+        // execute the query 
+        $is_updated = mysqli_query($app_db,$query);
+        
+        if($is_updated) return true;
+        else return false;
+    endif;
+    return false;
+}
+/* UPDATE TABLE IN DATABASE END */
+
 /* DELETE FROM DATABASE START */
 function db_delete_row($table,$id){
     global $app_db;
@@ -79,4 +107,20 @@ function db_delete_row($table,$id){
      return false;
 }
 /* DELETE FROM DATABASE END */
+
+/* DASHBOARD ALERT FUNCTION START*/
+function dashboard_alert($alert_type='Information',$alert_color='info',$message){
+    $html = "";
+    $html .= "<div class='alert alert-".$alert_color." alert-dismissible fade show mb-0 rounded-0' role='alert'>";
+    $html .= '<button type="button" class="close" data-dismiss="alert" aria-label="Close">';
+    $html .='<span aria-hidden="true">×</span>';
+    $html .= '</button>';
+    $html .=' <i class="fa fa-info mx-2"></i>';
+    $html .= ' <strong>'.$alert_type.': </strong>';
+    $html .= isset($message) & !empty($message)?$message:'';
+    $html .= '</div>';
+
+    return $html;
+}
+/* DASHBOARD ALERT FUNCTION END*/
 ?>

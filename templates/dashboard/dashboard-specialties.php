@@ -1,7 +1,7 @@
 <!-- SPECIALITES DATA MANAGMENT START-->
 <?php
     /* insert specialite */
-    if(isset($_POST["specialite_name"])):
+    if(isset($_GET["action"]) && $_GET["action"] == "add"):
         $elements = array();
         $elements["specialite_name"] = $_POST["specialite_name"];
         $elements["specialite_desc"] = $_POST["specialite_desc"];
@@ -10,6 +10,13 @@
     /* delete specialite */
     if(isset($_GET["id"]) && isset($_GET["action"]) && $_GET["action"] == "delete"):
         $is_deleted = db_delete_row("specialite",$_GET["id"]);
+    endif;
+    /* modify specialite */
+    if(isset($_GET["id"])  && isset($_GET["action"]) && $_GET["action"] == "modify"):
+        $elements = array();
+        $elements["specialite_name"] = $_POST["specialite_name"];
+        $elements["specialite_desc"] = $_POST["specialite_desc"];
+        $is_modified = db_update_row("specialite",$elements,("id=".$_GET["id"]));
     endif;
     /* get all specialite */
     $specialites = db_select_all("specialite");
@@ -29,24 +36,26 @@ if(isset($is_inserted)):
         $alert_color = "warning";
         $message = "L'ajout du spécialité ".$elements["specialite_name"]." est échoué";
     endif;
+    /* declared in function.php */
+    echo dashboard_alert($alert_type,$alert_color,$message);
 endif;
 /* deleted */
 if(isset($is_deleted) && $is_deleted):
     $alert_type = "Suppression avec Succés";
     $alert_color = "success";
     $message = "La spécialité est bien suprimmer";
+    /* declared in function.php */
+    echo dashboard_alert($alert_type,$alert_color,$message);
+endif;
+/* modified */
+if(isset($is_modified ) && $is_modified ):
+    $alert_type = "Modifier avec Succés";
+    $alert_color = "success";
+    $message = "La spécialité est bien modifier";
+    /* declared in function.php */
+    echo dashboard_alert($alert_type,$alert_color,$message);
 endif;
 ?>
-<?php if(isset($is_deleted) || isset($is_inserted)):?>
-<div class="alert alert-<?php echo $alert_color?> alert-dismissible fade show mb-0 rounded-0" role="alert">
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">×</span>
-    </button>
-    <i class="fa fa-info mx-2"></i>
-    <strong><?php echo $alert_type; ?>: </strong><?php echo $message ?>
-</div>
-<?php endif;?>
-
 <!-- NOTIFICATION END -->
 
 <!-- SPECIALITE MAIN CONTENT START -->
@@ -82,8 +91,8 @@ endif;
                                     foreach($specialites as $specialite):
                                 ?>
                                     <tr>
-                                        <td class="text-left"><?php echo $specialite["specialite_name"];?></td>
-                                        <td class="text-left">
+                                        <td class="text-left specialite-name"><?php echo $specialite["specialite_name"];?></td>
+                                        <td class="text-left specialite-desc">
                                             <?php 
                                                 if(!empty($specialite["specialite_desc"]))
                                                 echo $specialite["specialite_desc"];
@@ -92,7 +101,7 @@ endif;
                                             ?>
                                         </td>
                                         <td>
-                                            <button class="btn btn-secondary d-block mb-4 w-100">Modifier</button>
+                                            <button id="<?php echo $specialite["id"];?>" class="modify-speciality btn btn-secondary d-block mb-4 w-100">Modifier</button>
                                             <button id="<?php echo $specialite["id"];?>" class="delete-speciality btn btn-danger d-block w-100">Suprimmer</button>
                                         </td>
                                     </tr>
@@ -117,16 +126,16 @@ endif;
         <!-- SPECIATLIES TABLE END -->
         <!-- ADD SPECIALITY FORM START -->
         <div class="col-lg-4">
-            <div class="card card-small mb-4 sticky-top" style="top:80px">
+            <div class="dashboard-add-speciality card card-small mb-4 sticky-top" style="top:80px">
                 <div class="card-header border-bottom">
                     <h6 class="mb-0 d-flex">
                         <i class="material-icons mr-2">library_add</i>
-                        Ajouter une spécialité
+                        <span>Ajouter une spécialité</span>
                     </h6>
                 </div>
                 <div class="card-body">
                     <!-- add specialite form start -->
-                    <form action="<?php echo $_SERVER["PHP_SELF"]; ?>?section=specialties" method="POST">
+                    <form id="speciality-form" action="<?php echo $_SERVER["PHP_SELF"]; ?>?section=specialties&action=add" method="POST">
                         <!-- specialite input start -->
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
