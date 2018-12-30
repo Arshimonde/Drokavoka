@@ -19,7 +19,9 @@
         $is_modified = db_update_row("specialite",$elements,("id=".$_GET["id"]));
     endif;
     /* get all specialite */
-    $specialites = db_select_all("specialite");
+    $current_page = isset($_GET["page"])?((int)$_GET["page"]) : 1;
+    $mysql_limit = get_pagination("specialite",5,$current_page,false);
+    $specialites = db_select_all("specialite",$mysql_limit);
 ?>
 <!-- SPECIALITES DATA MANAGMENT END-->
 
@@ -73,9 +75,11 @@ endif;
         <div class="col-lg-8">
             <?php if(count($specialites)>0): ?>
                 <div class="card card-small mb-4">
+                    <!-- TABLE TITLE/DESCRIPTION -->
                     <div class="card-header border-bottom">
                         <h5 class="m-0">Les Spécialités</h5>
                     </div>
+                    <!-- SPECIALTIES TABLE -->
                     <div class="card-body p-0 pb-3 text-center">
                     
                         <table class="table mb-0">
@@ -112,6 +116,10 @@ endif;
                         </table>
                         
                     </div>
+                </div>
+                <!-- pagination -->
+                <div class="card-footer">
+                    <?php get_pagination("specialite",5,1); ?>
                 </div>
             <?php else:?>
             <div class="jumbotron text-center">

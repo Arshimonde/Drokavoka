@@ -39,6 +39,12 @@
                 <span>Les Spécialités</span>
             </a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link active" href="/dashboard.php?section=users">
+                <i class="material-icons">account_box</i>
+                <span>Les utilisateurs</span>
+            </a>
+        </li>
     </ul>
     <!-- NAVIGATION LINKS end -->
     </div>

@@ -54,7 +54,7 @@ function db_select_all($table,$limit=null){
     $table_data = array();
     $query = "SELECT * FROM ".$table;
 
-    if(isset($limit) && !empty($limit) && is_numeric($limit)){
+    if(isset($limit) && !empty($limit) ){
         $query .= " LIMIT ".$limit;
     }
     
@@ -107,6 +107,113 @@ function db_delete_row($table,$id){
      return false;
 }
 /* DELETE FROM DATABASE END */
+
+/* COUNT A TABLE FROM DATABASE START */
+function db_count($table){
+    $count = 0;
+    if(isset($table)):
+        global $app_db;
+        $query = "SELECT count(*)  FROM ".$table;
+        $result = mysqli_query($app_db,$query);
+        
+        if(mysqli_num_rows($result) > 0){
+            $rows = mysqli_fetch_array($result);
+            $count = $rows[0];
+        }    
+    endif;
+    return $count;
+}
+/* COUNT A TABLE FROM DATABASE END */
+
+/* PAGINATE DATA START*/
+function get_pagination($table,$elements_per_page=5,$page=1,$print_pagination=true){
+    if(isset($table)):
+        /* How much rows in $table */
+        $element_count = db_count($table);
+        $pages_count = round($element_count / $elements_per_page);
+
+        /* Pagination Logic */
+        if(!$print_pagination):
+            /* CALCULATE OFFSET OF ROWS IN TABLE $table */
+            $limit_offset = (($page-1) * $elements_per_page);
+
+            $mysql_limit = $limit_offset.",".$elements_per_page;
+            return $mysql_limit;
+        else:
+            /* get current page */
+            $current_page = isset($_GET["page"])?((int)$_GET["page"]) : 1;
+            /* PRINT PAGINATION */
+            $html = "";
+            $html .= '<nav aria-label="Page navigation ">';
+            $html .=    '<ul class="pagination pagination-sm justify-content-end">';
+            /* Previous Button */
+            $previous_disable = ($current_page == 1) ? " disabled " : "";
+            $html .= '<li class="page-item '.$previous_disable.'">';
+            $html .=  '<a class="page-link" href="'.get_pagination_uri($current_page-1).'">                         Précédent
+                        </a>';
+            $html .= '</li>';
+            /* LOOP through pages links */
+            $active = "";
+            for($i = 1;$i<= $pages_count;$i++):
+                /* active page start */
+                if($current_page == $i):
+                    $active = "active";
+                else:
+                    $active ="";
+                endif;
+                /* active page end */
+
+                /* Pages Buttons */
+                $html.='<li class="page-item '.$active.'">
+                             <a class="page-link" href="'.get_pagination_uri($i).'">'.$i.'</a>
+                        </li>';
+               
+            endfor;
+            /* NEXT Buttons */
+            $next_disable = ($current_page == $pages_count) ? " disabled " : ""; 
+            $html .= '<li class="page-item '.$next_disable.'">';
+            $html .=  '<a class="page-link" href="'.get_pagination_uri($current_page+1).'">                         Suivant
+                        </a>';
+            $html .= '</li>';
+
+            $html .=     '</ul>';
+            $html .= '</nav>';
+            echo $html;
+        endif;
+        
+    endif;
+}
+    /* get_pagination_url */
+function get_pagination_uri($page_num){
+    /* if url has 'page' in parameters */
+    if(isset($_GET['page'])):        
+        /* get current page name *.php */
+        $current_page = $_SERVER['PHP_SELF'];
+        /* get all GET query */
+        $query = $_GET;
+        // replace parameter(s)
+        $query['page'] = $page_num;
+        // rebuild url
+        $query_result = http_build_query($query);
+
+        return ($current_page."?".$query_result);
+    /* if url dosen't have 'page' in parameters */
+    else:
+        $page_uri_parameter = "";
+        $page_uri = $_SERVER['REQUEST_URI'];
+
+        if(strpos($page_uri,'=')!=false):
+            $page_uri_parameter = "&page=";
+        else:
+            $page_uri_parameter = "?page=";
+        endif;
+        $page_uri_parameter .= $page_num;
+        $page_uri .= $page_uri_parameter;
+
+        return $page_uri;
+    endif;
+}
+/* PAGINATE DATA END*/
 
 /* DASHBOARD ALERT FUNCTION START*/
 function dashboard_alert($alert_type='Information',$alert_color='info',$message){
