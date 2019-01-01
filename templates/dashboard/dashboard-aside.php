@@ -35,14 +35,14 @@
     <ul class="nav flex-column">
         <li class="nav-item">
             <a class="nav-link active" href="/dashboard.php?section=specialties">
-                <i class="material-icons">school</i>
+                <i class="fas fa-graduation-cap"></i>
                 <span>Les Spécialités</span>
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link active" href="/dashboard.php?section=users">
-                <i class="material-icons">account_box</i>
-                <span>Les utilisateurs</span>
+            <a class="nav-link active" href="/dashboard.php?section=lawyers">
+                <i class="fab fa-black-tie fa-1x"></i>
+                <span>Les avocats</span>
             </a>
         </li>
     </ul>

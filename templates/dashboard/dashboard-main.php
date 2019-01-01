@@ -6,5 +6,8 @@
         if(isset($_GET["section"]) && $_GET["section"] == "specialties"):
             include "dashboard-specialties.php";
         endif;
+        if(isset($_GET["section"]) && $_GET["section"] == "lawyers"):
+            include "dashboard-lawyers.php";
+        endif;
     ?>
 </main>

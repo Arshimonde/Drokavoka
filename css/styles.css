@@ -684,6 +684,7 @@ select.form-control-lg:not([size]):not([multiple]),
 .dashboard .main-sidebar .nav .nav-item:hover i,
 .dashboard .main-sidebar .nav .nav-item .nav-link:hover i {
   color: #007bff;
+  font-size:18px;
 }
 
 .dashboard .main-sidebar .nav--no-borders .nav-item .nav-link {

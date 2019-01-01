@@ -66,7 +66,7 @@ endif;
     <div class="page-header row no-gutters py-4 mb-3 border-bottom">
         <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
             <span class="text-uppercase page-subtitle">Gestion des spécialités</span>
-            <h3 class="page-title d-flex"><i class="material-icons mr-2">school</i>Les spécialités</h3>
+            <h3 class="page-title d-flex"><i class="fas fa-graduation-cap mr-1 mt-1"></i>Les spécialités</h3>
         </div>
     </div>
     <!-- PAGE HEADER END -->
