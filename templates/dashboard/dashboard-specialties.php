@@ -1,7 +1,7 @@
 <!-- SPECIALITES DATA MANAGMENT START-->
 <?php
     /* insert specialite */
-    if(isset($_GET["action"]) && $_GET["action"] == "add"):
+    if(isset($_GET["action"]) && $_GET["action"] == "add" && isset($_POST["specialite_name"])):
         $elements = array();
         $elements["specialite_name"] = $_POST["specialite_name"];
         $elements["specialite_desc"] = $_POST["specialite_desc"];

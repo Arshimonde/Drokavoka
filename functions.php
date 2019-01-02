@@ -8,7 +8,7 @@ function database_notfound_error($errno, $errstr,$error_file,$error_line,$error_
         die();
     endif;
 }
-set_error_handler("database_notfound_error");
+// set_error_handler("database_notfound_error");
 /* ERROR HANDLING END*/
 
 /* INIT DATABASE GLOBALLY START */
@@ -27,23 +27,46 @@ $app_db = mysqli_connect($server_name,$db_user,$db_password,$db_name);
 /* INSERT IN DATABASE START*/
 function db_insert($table,$elements){
     global $app_db;
-    switch($table){
-        /* insert une specialite in database */
-        case "specialite":{
-            $stmt = mysqli_stmt_init($app_db);
-            mysqli_stmt_prepare($stmt,"INSERT INTO specialite(specialite_name,specialite_desc) VALUES(?,?)");
-            mysqli_stmt_bind_param($stmt,"ss",$elements["specialite_name"],$elements["specialite_desc"]);
-            $is_inserted = mysqli_stmt_execute($stmt);
+    /* prepare the sql */
+    $string_elements = array();
+    $numeric_elements = array();
+    foreach($elements as $key=>$element):
+        if(is_numeric($element)):
+            $numeric_elements[$key] = $element;
+        else:
+            $string_elements[$key] = "'".$element."'";
+        endif;
+    endforeach;
+    
+    $columns = ''; 
+    
+    if(count($string_elements)> 0 && count($numeric_elements)> 0):
 
-            if($is_inserted):
-                return true;
-            endif;
+        $columns .= implode(", ",array_keys($string_elements));
+        $columns .= ",".implode(", ",array_keys($numeric_elements));
+        $values = implode(", ",array_values($string_elements)).", ".implode(", ",array_values($numeric_elements));
 
-            mysqli_stmt_close($stmt);
-            break;
-        }
-        default:break;
-    }
+    elseif(count($string_elements)> 0):
+
+        $columns = implode(",",array_keys($string_elements));
+        $values = implode(",",array_values($string_elements));
+
+    elseif(count($numeric_elements)> 0):
+
+        $columns = implode(",",array_keys($numeric_elements));
+        $values = implode(",",array_values($numeric_elements));
+
+    endif;
+
+    $sql = "INSERT INTO ".$table."(".$columns.") VALUES(".$values.")";
+
+    /* execute statement */
+    $is_inserted = mysqli_query($app_db,$sql);
+    /* test if inserted */
+    if($is_inserted):
+        return true;
+    endif;
+
     return false;
 }
 /* INSERT IN DATABASE END*/
