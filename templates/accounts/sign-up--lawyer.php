@@ -1,163 +1,196 @@
-<!DOCTYPE html>
-<html lang="fr" >
-<head>
-<meta charset="UTF-8">
-<title>Drokavoka - Inscription des Avocats</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" type="text/javascript"></script>
-
-
-<link rel='stylesheet' href='http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css'>
-<link rel='stylesheet' href='http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css'>
-<link rel='stylesheet' href='http://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.0/css/bootstrapValidator.min.css'>
-
-<link rel="stylesheet" href="css/style2.css">
-
-  
-</head>
-
-<body>
-    <div class="jumbotron text-center">
-        <p>Inscription des Avocats</p>
-    </div>
-  <div class="container">
-    <form class="well form-horizontal" action=" " method="post"  id="register_form">
-<fieldset>
-
-
-<!-- Text Input -->
-
-
-<div class="form-group">
-    <label class="col-md-4 control-label">Gentilité</label>
-    <div class="col-md-1">
-        <div class="radio">
-            <label>
-                <input type="radio" name="gentilite" value="Mr" /> Mr.
-            </label>
+<div class="container-fluid lawyer-sign-up">
+    <div class="row">
+        <!-- ILLUSTRAION START -->
+        <div class="illustration col-xl-5 col-lg-5 col-md-5 col-sm-4 col-4">
+            <h1 class="text-center text-uppercase">Crée Compte</h1>
+            <p class="text-center mt-4 mx-4">
+                Lorizzle ipsizzle dolizzle sizzle amizzle, brizzle adipiscing elit. Nullizzle black velizzle, ghetto volutpizzle, suscipizzle phat, bow wow wow vizzle, fizzle.
+            </p>
         </div>
-    </div>
+        <!-- ILLUSTRAION END -->
 
-    <div class="col-md-1">
-        <div class="radio">
-            <label>
-                <input type="radio" name="gentilite" value="Mme" /> Mme.
-            </label>
-        </div>
-    </div>
+        <!-- SIGN UP FORM START -->
+        <div class="lawyer-sign-up-section col-xl-7 col-lg-7 col-md-7 col-sm-8 col-8">
 
-    <div class="col-md-1">
-        <div class="radio">
-            <label>
-                <input type="radio" name="gentilite" value="Mlle" /> Mlle.
-            </label>
-        </div>
-    </div>
-    
-</div>
+            <!-- form -->
+            <form id="lawyer-sign-up-form" action="" class="px-5 mt-5" >
+                <!-- STEPPER START-->
+                <div class="accordion" id="lawyer-sign-up-stepper">
 
+                    <!-- STEP 1 START -->
+                    <div class="card step-1">
+                        <div class="card-header p-0 border-bottom">
+                            <a class="btn text-left d-block px-4 py-3" data-toggle="collapse" data-target="#account-setup">
+                                <span class="number-circle mr-2">1</span>
+                                Informations du Compte
+                            </a>
+                        </div>
+                        <div id="account-setup" class="collapse show" data-parent="#lawyer-sign-up-stepper">
+                            <div class="card-body px-5 clearfix pb-3">
+                                <!-- EMAIL START-->
+                                <div class="form-group">
+                                    <label for="email">Email</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="email"><i class="fas fa-envelope  fa-1x"></i></span>
+                                        </div>
+                                        <input type="email" class="form-control" id="email" name="email"/>
+                                    </div>
+                                </div>
+                                <!-- EMAIL END-->
+                                
+                                <!-- PASSWORD START-->
+                                <div class="form-group">
+                                    <label for="password">Mot de passe</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="email">
+                                                <i class="fas fa-key fa-1x"></i>
+                                            </span>
+                                        </div>
+                                        <input type="password" class="form-control" id="password" name="password"/>
+                                    </div>
+                                </div>
+                                <!-- PASSWORD END-->
 
-<!-- Text input-->
-
-<div class="form-group">
-  <label class="col-md-4 control-label">Nom</label>  
-  <div class="col-md-4 inputGroupContainer">
-  <div class="input-group">
-  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-  <input  name="nom" placeholder="Nom" class="form-control"  type="text">
-    </div>
-  </div>
-</div>
-
-<!-- Text input-->
-
-<div class="form-group">
-  <label class="col-md-4 control-label" >Prénom</label> 
-    <div class="col-md-4 inputGroupContainer">
-    <div class="input-group">
-  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-  <input name="prenom" placeholder="Prénom" class="form-control"  type="text">
-    </div>
-  </div>
-</div>
-
-<!-- Text input-->
-       <div class="form-group">
-  <label class="col-md-4 control-label">E-Mail</label>  
-    <div class="col-md-4 inputGroupContainer">
-    <div class="input-group">
-        <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-  <input name="email" placeholder="Votre adresse E-mail" class="form-control"  type="text">
-    </div>
-  </div>
-</div>
-
-
-<!-- Text input-->
-       
-<div class="form-group">
-  <label class="col-md-4 control-label">Téléphone</label>  
-    <div class="col-md-4 inputGroupContainer">
-    <div class="input-group">
-        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
-  <input name="telephone" placeholder="0662020304" class="form-control" type="text">
-    </div>
-  </div>
-</div>
-
-<!-- Text input-->
- 
-<div class="form-group">
-  <label class="col-md-4 control-label">Ville</label>  
-    <div class="col-md-4 inputGroupContainer">
-    <div class="input-group">
-        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-  <input name="ville" placeholder="Ville" class="form-control"  type="text">
-    </div>
-  </div>
-</div>
-
-<!-- Text input-->
-
-<!-- radio checks -->
- <div class="form-group">
-                        <label class="col-md-4 control-label">Validation de compte par</label>
-                        <div class="col-md-4">
-                            <div class="radio">
-                                <label>
-                                    <input type="radio" name="validation" value="sms" /> SMS
-                                </label>
-                            </div>
-                            <div class="radio">
-                                <label>
-                                    <input type="radio" name="validation" value="email" /> Email
-                                </label>
+                                <!-- CONFIRM PASSWORD START-->
+                                <div class="form-group">
+                                    <label for="confirm_password">Confirmer le Mot de passe</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="email">
+                                                <i class="fas fa-key fa-1x"></i>
+                                            </span>
+                                        </div>
+                                        <input type="password" class="form-control" id="confirm_password" name="confirm_password"/>
+                                    </div>
+                                </div>
+                                <!-- CONFIRM PASSWORD END-->
+                                <a class="float-right btn btn-primary step-1-button">Suivant</a>
                             </div>
                         </div>
                     </div>
+                    <!-- STEP 1 START -->
+                    
+                    <!-- STEP  2 START-->
+                    <div class="card step-2">
+                        <div class="card-header p-0 border-bottom">
+                            <a class="btn text-left d-block px-4 py-3" data-toggle="collapse" data-target="#personal-info">
+                                <span class="number-circle mr-2">2</span>
+                                Informations Personnel
+                            </a>
+                        </div>
 
-<!-- Success message -->
-<div class="alert alert-success" role="alert" id="success_message">Success <i class="glyphicon glyphicon-thumbs-up"></i> Votre compte a été enregistré avec succès.</div>
+                        <div id="personal-info" class="collapse" data-parent="#lawyer-sign-up-stepper">
+                            <div class="card-body px-5 clearfix pb-3">
+                                <!-- SEXE START -->
+                                <div class="form-group">
+                                    <label class="d-block">Gentilité</label>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="gender" id="mr" value="mr">
+                                        <label class="form-check-label" for="mr">Monsieur</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="gender" id="mm" value="mm">
+                                        <label class="form-check-label" for="mm">Madame</label>
+                                    </div>
+                                </div>
+                                <!-- SEXE END -->
 
-<!-- Button -->
-<div class="form-group">
-  <label class="col-md-4 control-label"></label>
-  <div class="col-md-4">
-    <button type="submit" class="btn btn-warning" >S'enregistrer<span class="glyphicon glyphicon-send"></span></button>
-  </div>
+                                <!-- FIRST NAME START-->
+                                <div class="form-group">
+                                    <label for="first_name">Prénom</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <i class="fas fa-user fa-1x"></i>
+                                            </div>
+                                        </div>
+                                        <input type="text" class="form-control" id="first_name" name="first_name"/>
+                                    </div>
+                                </div>
+                                <!-- FIRST NAME END-->
+                                <!-- LAST NAME START-->
+                                <div class="form-group">
+                                    <label for="last_name">Nom</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <i class="fas fa-user fa-1x"></i>
+                                            </div>
+                                        </div>
+                                        <input type="text" class="form-control" id="last_name" name="last_name"/>
+                                    </div>
+                                </div>
+                                <!-- LAST NAME END-->
+
+                                <a class="btn btn-primary float-right step-2-button">Suivant</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- STEP  2 END-->
+
+                    <!-- STEP  3 START-->
+                    <div class="card step-3">
+                        <div class="card-header p-0 border-bottom">
+                            <a class="btn text-left d-block px-4 py-3" data-toggle="collapse" data-target="#contact-info">
+                                <span class="number-circle mr-2">3</span>
+                                Informations de Contact
+                            </a>
+                        </div>
+
+                        <div id="contact-info" class="collapse" data-parent="#lawyer-sign-up-stepper">
+                            <div class="card-body px-5 clearfix">
+                                <!-- ADDRESS START-->
+                                <div class="form-group">
+                                    <label for="address">Adresse</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <i class="fas fa-map-marker-alt fa-1x"></i>
+                                            </div>
+                                        </div>
+                                          <input type="text" class="form-control" id="address" name="address"/>
+                                    </div>                                  
+                                </div>
+                                <!-- ADDRESS END-->
+                                <!-- CITY START-->
+                                <div class="form-group">
+                                    <label for="city">Ville</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <i class="fas fa-building fa-1x"></i>
+                                            </div>
+                                        </div>
+                                        <input type="text" class="form-control" id="city" name="city"/>
+                                    </div>    
+                                </div>
+                                <!-- CITY END-->
+                                <!-- GSM START-->
+                                <div class="form-group">
+                                    <label for="gsm">GSM</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <i class="fas fa-mobile-alt fa-1x"></i>
+                                            </div>
+                                        </div>
+                                        <input type="tel" class="form-control" id="gsm" name="gsm"/>
+                                    </div>    
+                                </div>
+                                <!-- GSM END-->
+                                <button class="btn btn-primary float-right step-button" type="submit">Créer</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- STEP  2 END-->
+
+   
+                </div>
+                <!-- STEPPER END-->
+            </form>
+        </div>
+        <!-- SIGN UP FORM END  -->
+    </div>
 </div>
-
-</fieldset>
-</form>
-</div>
-    </div><!-- /.container -->
-  <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-<script src='http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js'></script>
-<script src='http://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.4.5/js/bootstrapvalidator.min.js'></script>
-
-  
-
-<script  src="js/index.js"></script>
-
-</body>
-
-</html>

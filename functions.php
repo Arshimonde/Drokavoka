@@ -238,6 +238,14 @@ function get_pagination_uri($page_num){
 }
 /* PAGINATE DATA END*/
 
+/* GET CURRENT PAGE START */
+function get_current_page(){
+    $current_path = $_SERVER['PHP_SELF'];
+    $current_page = substr($current_path,1,(strpos($current_path,".")-1));
+    return $current_page;
+}
+/*  GET CURRENT PAGE START  */
+
 /* DASHBOARD ALERT FUNCTION START*/
 function dashboard_alert($alert_type='Information',$alert_color='info',$message){
     $html = "";

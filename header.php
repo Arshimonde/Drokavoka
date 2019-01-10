@@ -33,5 +33,10 @@
     <!-- INCLUDE functions.php in all webapplication start -->
     <?php include "functions.php"; ?>
     <!-- INCLUDE functions.php in all webapplication end -->
-    <nav>
+
     <!-- HEADER CONTENT HERE!!!! -->
+    <?php if(get_current_page() != "dashboard" && get_current_page() != "account"):?>
+        <div class="bg-dark text-center">
+            <h5>THIS HEADER</h5>
+        </div>
+    <?php endif; ?>

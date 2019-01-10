@@ -60,6 +60,15 @@ jQuery(function($){
           });
         });
         /* MODIFY SPECIALITY END*/
+
+        /* ACCOUNT SIGN UP START */
+        $("#lawyer-sign-up-form .card-body .step-1-button").click(function(){
+            $("#personal-info").collapse("show");
+        });
+        $("#lawyer-sign-up-form .card-body .step-2-button").click(function(){
+            $("#contact-info").collapse("show");
+        });
+        /* ACCOUNT SIGN UP END */
     });
 
 });

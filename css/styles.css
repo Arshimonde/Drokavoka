@@ -1,32 +1,14 @@
 /*GENERAL CSS START*/
 :root {
-    --blue: #007bff;
-    --indigo: #674eec;
-    --purple: #8445f7;
-    --pink: #ff4169;
-    --red: #c4183c;
-    --orange: #fb7906;
-    --yellow: #ffb400;
-    --green: #17c671;
-    --teal: #1adba2;
-    --cyan: #00b8d8;
-    --white: #fff;
-    --gray: #868e96;
-    --gray-dark: #343a40;
-    --primary: #007bff;
-    --secondary: #5A6169;
-    --success: #17c671;
-    --info: #00b8d8;
-    --warning: #ffb400;
-    --danger: #c4183c;
-    --light: #FBFBFB;
-    --dark: #212529;
-    --breakpoint-xs: 0;
-    --breakpoint-sm: 576px;
-    --breakpoint-md: 768px;
-    --breakpoint-lg: 992px;
-    --breakpoint-xl: 1200px;
-    --font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  /* COLORS variables*/
+  --drokavoka-bleu: #2f445e;
+  --drokavoka-light-blue: #44566c;
+  --drokavoka-white: #ececec ;
+  --drokavoka-lighter-bleu:#4b5e65;
+  --drokavoka-black:#201b22;
+  --drokavoka-bleu-half-rgba: rgba(47, 68, 94,0.5);
+  /* FONTS variables*/
+   --font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     --font-family-monospace: "Roboto Mono", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
@@ -86,7 +68,7 @@ h6,
   margin-bottom: 0.75rem;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   font-weight: 400;
-  color: #3D5170;
+  color: var(--drokavoka-light-blue);
 }
 
 h1,
@@ -352,7 +334,7 @@ select.form-control-lg:not([size]):not([multiple]),
   border: 1px solid #e1e5eb;
   font-weight: 300;
   will-change: border-color, box-shadow;
-  border-radius: 0.25rem;
+  border-radius: 0rem;
   box-shadow: none;
   transition: box-shadow 250ms cubic-bezier(0.27, 0.01, 0.38, 1.06), border 250ms cubic-bezier(0.27, 0.01, 0.38, 1.06);
 }
@@ -800,3 +782,51 @@ select.form-control-lg:not([size]):not([multiple]),
 }
     /*page header end*/
 /*DASHBOARD END*/
+
+
+/*ACCOUNT START*/
+  /* lawyer account */
+  .lawyer-sign-up .illustration{
+    height:100vh;
+    min-height:650px;
+    background-repeat: no-repeat;
+    background-position: bottom;
+    background-size:contain;
+    background-color: var(--drokavoka-white);
+    background-image: url("../images/sign-up-lawyer-bg.png");
+  }
+  .lawyer-sign-up .illustration p{
+    font-size:17px;
+  }
+  .lawyer-sign-up .illustration h1{
+    margin-top:9rem;
+  }
+  .lawyer-sign-up .number-circle{
+    background-color: var(--drokavoka-bleu);
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    color:var(--drokavoka-white);
+    font-weight: bold;
+    font-size:17px;
+  }
+  #lawyer-sign-up-form .card-header a{
+    font-size: 17px;
+  }
+  #lawyer-sign-up-form .form-control{
+    font-size: 17px;
+  }
+  #lawyer-sign-up-form .card-body .btn-primary{
+    background-color: var(--drokavoka-bleu);
+    border:0;
+    color:var(--drokavoka-white);
+  }
+  #lawyer-sign-up-form .card-body .btn-primary:focus,
+  #lawyer-sign-up-form .card-body .btn-primary:visited,
+  #lawyer-sign-up-form .card-body .btn-primary:active{
+    box-shadow: 0 0 0 0.2rem var(--drokavoka-bleu-half-rgba);
+  }
+/*ACCOUNT END*/
