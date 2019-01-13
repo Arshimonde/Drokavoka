@@ -36,13 +36,13 @@
         <li class="nav-item">
             <a class="nav-link active" href="/dashboard.php?section=specialties">
                 <i class="fas fa-graduation-cap"></i>
-                <span>Les Spécialités</span>
+                <span>Spécialités</span>
             </a>
         </li>
         <li class="nav-item">
             <a class="nav-link active" href="/dashboard.php?section=lawyers">
                 <i class="fab fa-black-tie fa-1x"></i>
-                <span>Les avocats</span>
+                <span>Avocats</span>
             </a>
         </li>
     </ul>

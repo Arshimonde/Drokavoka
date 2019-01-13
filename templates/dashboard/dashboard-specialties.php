@@ -21,7 +21,7 @@
     /* get all specialite */
     $current_page = isset($_GET["page"])?((int)$_GET["page"]) : 1;
     $mysql_limit = get_pagination("specialite",5,$current_page,false);
-    $specialites = db_select_all("specialite",$mysql_limit);
+    $specialites = db_select("specialite",null,$mysql_limit);
 ?>
 <!-- SPECIALITES DATA MANAGMENT END-->
 

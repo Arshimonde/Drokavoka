@@ -1,3 +1,33 @@
+<!-- SAVE LAWYER IN DATABASE START -->
+<?php
+    if(isset($_POST["email"])):  
+        $speciality_ids = $_POST["id_specialite"];
+        unset($_POST["id_specialite"]);
+        unset($_POST["confirm_password"]);
+        $elements = $_POST;
+        /* insert lawyer into 'avocat' mysql table */
+        $is_lawyer_inserted = db_insert('avocat',$elements);
+        global $app_db;
+        $lawyer_id = mysqli_insert_id($app_db);
+        
+        /* insert lawyer and specialites in 'avocat_specialite' mysql table*/
+        foreach($speciality_ids as $speciality_id):
+            $is_lawyer_inserted = db_insert('avocat_specialite',array(
+                                    "id_avocat" => $lawyer_id,
+                                    "id_specialite" =>intval($speciality_id)
+                                  ));
+        endforeach;
+
+        // Redirect on account creation
+        if($is_lawyer_inserted):
+            header('Location: /index.php');
+        endif;
+
+    endif;
+?>
+<!-- SAVE LAWYER IN DATABASE END-->
+
+
 <div class="container-fluid lawyer-sign-up">
     <div class="row">
         <!-- ILLUSTRAION START -->
@@ -13,14 +43,14 @@
         <div class="lawyer-sign-up-section col-xl-7 col-lg-7 col-md-7 col-sm-8 col-8">
 
             <!-- form -->
-            <form id="lawyer-sign-up-form" action="" class="px-5 mt-5" >
+            <form id="lawyer-sign-up-form" method="POST" action="/account.php?type=lawyer" class="px-5 mt-4 needs-validation" novalidate >
                 <!-- STEPPER START-->
                 <div class="accordion" id="lawyer-sign-up-stepper">
 
                     <!-- STEP 1 START -->
                     <div class="card step-1">
                         <div class="card-header p-0 border-bottom">
-                            <a class="btn text-left d-block px-4 py-3" data-toggle="collapse" data-target="#account-setup">
+                            <a class="btn text-left d-block px-4 py-2" data-target="#account-setup">
                                 <span class="number-circle mr-2">1</span>
                                 Informations du Compte
                             </a>
@@ -34,7 +64,10 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text" id="email"><i class="fas fa-envelope  fa-1x"></i></span>
                                         </div>
-                                        <input type="email" class="form-control" id="email" name="email"/>
+                                        <input type="email" class="form-control" id="email" name="email" required/>
+                                        <div class="invalid-feedback">
+                                            Veuillez entrez un email correct
+                                        </div>
                                     </div>
                                 </div>
                                 <!-- EMAIL END-->
@@ -48,7 +81,10 @@
                                                 <i class="fas fa-key fa-1x"></i>
                                             </span>
                                         </div>
-                                        <input type="password" class="form-control" id="password" name="password"/>
+                                        <input type="password" class="form-control" id="password" name="password" required/>
+                                        <div class="invalid-feedback">
+                                            Le mot de passe est requis
+                                        </div>
                                     </div>
                                 </div>
                                 <!-- PASSWORD END-->
@@ -62,7 +98,10 @@
                                                 <i class="fas fa-key fa-1x"></i>
                                             </span>
                                         </div>
-                                        <input type="password" class="form-control" id="confirm_password" name="confirm_password"/>
+                                        <input type="password" class="form-control" id="confirm_password" name="confirm_password" required/>
+                                        <div class="invalid-feedback">
+                                            Le mot de passe n'est pas confirmé ou vide 
+                                        </div>
                                     </div>
                                 </div>
                                 <!-- CONFIRM PASSWORD END-->
@@ -75,24 +114,24 @@
                     <!-- STEP  2 START-->
                     <div class="card step-2">
                         <div class="card-header p-0 border-bottom">
-                            <a class="btn text-left d-block px-4 py-3" data-toggle="collapse" data-target="#personal-info">
+                            <a class="btn text-left d-block px-4 py-2" data-target="#personal-info">
                                 <span class="number-circle mr-2">2</span>
                                 Informations Personnel
                             </a>
                         </div>
 
                         <div id="personal-info" class="collapse" data-parent="#lawyer-sign-up-stepper">
-                            <div class="card-body px-5 clearfix pb-3">
+                            <div class="card-body px-5 pt-2 clearfix pb-3">
                                 <!-- SEXE START -->
                                 <div class="form-group">
                                     <label class="d-block">Gentilité</label>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="gender" id="mr" value="mr">
-                                        <label class="form-check-label" for="mr">Monsieur</label>
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input class="custom-control-input" type="radio" name="gender" id="mr" value="mr" checked>
+                                        <label class="custom-control-label" for="mr">Monsieur</label>
                                     </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="gender" id="mm" value="mm">
-                                        <label class="form-check-label" for="mm">Madame</label>
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input class="custom-control-input" type="radio" name="gender" id="mm" value="mm">
+                                        <label class="custom-control-label" for="mme">Madame</label>
                                     </div>
                                 </div>
                                 <!-- SEXE END -->
@@ -106,7 +145,10 @@
                                                 <i class="fas fa-user fa-1x"></i>
                                             </div>
                                         </div>
-                                        <input type="text" class="form-control" id="first_name" name="first_name"/>
+                                        <input type="text" class="form-control" id="first_name" name="first_name" required/>
+                                        <div class="invalid-feedback">
+                                            Le prénom est requis
+                                        </div>
                                     </div>
                                 </div>
                                 <!-- FIRST NAME END-->
@@ -119,11 +161,37 @@
                                                 <i class="fas fa-user fa-1x"></i>
                                             </div>
                                         </div>
-                                        <input type="text" class="form-control" id="last_name" name="last_name"/>
+                                        <input type="text" class="form-control" id="last_name" name="last_name" required/>
+                                        <div class="invalid-feedback">
+                                            Le nom est requis
+                                        </div>
                                     </div>
                                 </div>
                                 <!-- LAST NAME END-->
 
+                                <!-- SPECIALITE START -->
+                                <div class="form-group">
+                                    <label for="">Votre Spécialité</label>
+                                        <select 
+                                            name="id_specialite[]" id="" class="selectpicker"
+                                             title = "Choisir une ou plusieurs spécialité " 
+                                             data-live-search="true"
+                                             data-width="100%" 
+                                             data-size = "8"
+                                             multiple
+                                        >
+                                            <!-- fill options -->
+                                            <?php
+                                               $options =  db_select("specialite");
+                                               foreach($options as $option):
+                                                    $id=$option['id'];
+                                                    $name = $option['specialite_name'];
+                                                    echo "<option value='".$id."'>$name</option>";
+                                               endforeach;
+                                            ?>
+                                        </select>
+                                </div> 
+                                <!-- SPECIALITE END -->
                                 <a class="btn btn-primary float-right step-2-button">Suivant</a>
                             </div>
                         </div>
@@ -133,7 +201,7 @@
                     <!-- STEP  3 START-->
                     <div class="card step-3">
                         <div class="card-header p-0 border-bottom">
-                            <a class="btn text-left d-block px-4 py-3" data-toggle="collapse" data-target="#contact-info">
+                            <a class="btn text-left d-block px-4 py-2" data-target="#contact-info">
                                 <span class="number-circle mr-2">3</span>
                                 Informations de Contact
                             </a>
@@ -150,7 +218,10 @@
                                                 <i class="fas fa-map-marker-alt fa-1x"></i>
                                             </div>
                                         </div>
-                                          <input type="text" class="form-control" id="address" name="address"/>
+                                          <input type="text" class="form-control" id="address" name="address" required/>
+                                          <div class="invalid-feedback">
+                                            L'adresse est requise
+                                         </div>
                                     </div>                                  
                                 </div>
                                 <!-- ADDRESS END-->
@@ -163,7 +234,10 @@
                                                 <i class="fas fa-building fa-1x"></i>
                                             </div>
                                         </div>
-                                        <input type="text" class="form-control" id="city" name="city"/>
+                                        <input type="text" class="form-control" id="city" name="city" required/>
+                                        <div class="invalid-feedback">
+                                            La ville est requise
+                                         </div>
                                     </div>    
                                 </div>
                                 <!-- CITY END-->

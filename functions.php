@@ -59,7 +59,6 @@ function db_insert($table,$elements){
     endif;
 
     $sql = "INSERT INTO ".$table."(".$columns.") VALUES(".$values.")";
-
     /* execute statement */
     $is_inserted = mysqli_query($app_db,$sql);
     /* test if inserted */
@@ -72,13 +71,17 @@ function db_insert($table,$elements){
 /* INSERT IN DATABASE END*/
 
 /* SELECT FROM DATABASE START*/
-function db_select_all($table,$limit=null){
+function db_select($table,$where=null,$limit=null){
     global $app_db;
     $table_data = array();
     $query = "SELECT * FROM ".$table;
 
     if(isset($limit) && !empty($limit) ){
         $query .= " LIMIT ".$limit;
+    }
+
+    if(isset($where) && !empty($where) ){
+        $query .= " WHERE ".$where;
     }
     
     $result = mysqli_query($app_db, $query );
@@ -259,6 +262,28 @@ function dashboard_alert($alert_type='Information',$alert_color='info',$message)
     $html .= '</div>';
 
     return $html;
+}
+
+    /* Get lawyer data */
+function get_lawyer_data($id){
+    $table = "avocat";
+    $where = "id = ".$id;
+    $lawyer_data = db_select($table,$where);
+
+    return $lawyer_data[0];
+}
+    /* Get Lawyer Specialites */
+function get_lawyer_specialties($id){
+    $table = "avocat_specialite a_s, specialite s";
+    $where = "s.id = a_s.id_specialite AND a_s.id_avocat = ".$id;
+    $lawyer_specialites = db_select($table,$where);
+
+    $specialites = array();
+    foreach($lawyer_specialites as $specialite):
+        array_push($specialites,$specialite["specialite_name"]);
+    endforeach;
+
+    return $specialites;
 }
 /* DASHBOARD ALERT FUNCTION END*/
 ?>

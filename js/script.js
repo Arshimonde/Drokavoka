@@ -1,6 +1,9 @@
 jQuery(function($){
     /* IS DOCUMENT RENDERED / READY  */
     $(document).ready(function(){
+        /* GENERAL START */
+        $('selectpicker').selectpicker();
+        /* GENERAL END */
         /* DELETE SPECIALITY START*/
         $(".delete-speciality").on("click",function(){
             var id = $(this).attr("id");
@@ -62,13 +65,54 @@ jQuery(function($){
         /* MODIFY SPECIALITY END*/
 
         /* ACCOUNT SIGN UP START */
+            /* step 1 */
         $("#lawyer-sign-up-form .card-body .step-1-button").click(function(){
-            $("#personal-info").collapse("show");
+            /* validate inputs */
+            let inputs_valid = bootstrap_validate_inputs($("#lawyer-sign-up-form  #account-setup input"));
+            /* check password */
+            if($("#lawyer-sign-up-form  #confirm_password").val() != $("#lawyer-sign-up-form  #password").val()){
+              $("#confirm_password").addClass("is-invalid");
+              inputs_valid = false;
+            }
+
+            if(inputs_valid){
+              $("#lawyer-sign-up-form .step-1 .card-header a").attr("data-toggle","collapse");
+              $("#lawyer-sign-up-form #personal-info").collapse("show");
+            }
         });
+          /* step 2 */
         $("#lawyer-sign-up-form .card-body .step-2-button").click(function(){
-            $("#contact-info").collapse("show");
+            let inputs_valid = bootstrap_validate_inputs($("#lawyer-sign-up-form  #personal-info input"));
+            if(inputs_valid){
+              $("#lawyer-sign-up-form .step-2 .card-header a").attr("data-toggle","collapse");
+              $("#lawyer-sign-up-form .step-3 .card-header a").attr("data-toggle","collapse");
+              $("#lawyer-sign-up-form  #contact-info").collapse("show");
+            }
+        });
+            /* on form submit */
+        $("#lawyer-sign-up-form").submit(function(evt){
+            evt.preventDefault();
+            let inputs_valid = bootstrap_validate_inputs($("#lawyer-sign-up-form #contact-info input"));
+
+            if(inputs_valid){
+              this.submit();
+            }
         });
         /* ACCOUNT SIGN UP END */
     });
 
 });
+/* FUNCTION TO VALIDATE INPUTS TAKS JQUERY OBJECT/SELECTOR AND RETURN FALSE OR TRUE */
+function bootstrap_validate_inputs($selector_inputs){
+    let inputs_valid = true;
+    $selector_inputs.removeClass("is-invalid");
+
+    $selector_inputs.each(function(){
+      if(this.checkValidity() == false ){
+        inputs_valid = false;
+        $(this).addClass("is-invalid");
+      }
+    });
+
+    return inputs_valid;
+}
