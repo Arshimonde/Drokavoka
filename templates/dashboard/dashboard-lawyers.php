@@ -1,3 +1,24 @@
+<!-- DELETE LAWYER START -->
+<?php
+    /* delete specialite */
+    if(isset($_GET["id"]) && isset($_GET["action"]) && $_GET["action"] == "delete"):
+        $deleted_lawyer = get_lawyer_data($_GET["id"]);
+        $is_deleted = db_delete_row("avocat",$_GET["id"]);
+    endif;
+    /* deleted alert */
+    if(isset($is_deleted) && $is_deleted):
+        $alert_type = "Suppression avec Succés";
+        $alert_color = "success";
+        $message = "l'avocat ". $deleted_lawyer['last_name'] ." ".$deleted_lawyer['first_name'] ." est bien suprimmer";
+        /* declared in function.php */
+        echo dashboard_alert($alert_type,$alert_color,$message);
+    endif;
+?>
+<!-- DELETE LAWYER END -->
+
+
+
+
 <!-- MAIN CONTENT START -->
 <div class="container-fluid main-content pb-4">
     <!-- PAGE HEADER START -->
@@ -11,12 +32,15 @@
     <!-- Lawyers START -->
     <div class="row">
         <?php
-            $lawyers = db_select("avocat");
+            /* get all specialite */
+            $current_page = isset($_GET["page"])?((int)$_GET["page"]) : 1;
+            $mysql_limit = get_pagination("avocat",3,$current_page,false);
+            $lawyers = db_select("avocat",null,$mysql_limit);
             foreach($lawyers as $lawyer):
         ?>
             <!-- lawyer start -->
             <?php $lawyer_data = get_lawyer_data($lawyer["id"]);?>
-            <div class="col-lg-3 lawyer">
+            <div class="col-lg-4 mt-4 lawyer">
                 <div class="card">
                     <!-- lawyer image & name -->
                     <div class="card-header bg-light text-center border-bottom pb-2 px-0">
@@ -63,8 +87,8 @@
                         </ul>
                     </div>
                     <div class="card-footer bg-light border-top px-1 text-center">
-                        <a class="card-link d-inline-block btn btn-danger" href="#">Suprimmer</a>
-                        <a class="card-link d-inline-block btn btn-secondary" href="#">Modifier</a>
+                        <a class="card-link d-inline-block btn btn-danger" href="/dashboard.php?section=lawyers&action=delete&id=<?php echo $lawyer['id'];?>">Suprimmer</a>
+                        <a class="card-link d-inline-block btn btn-secondary" href="/dashboard.php?section=edit-lawyer&id=<?php echo $lawyer['id'];?>">Modifier</a>
                     </div>
                 </div>
             </div>
@@ -72,5 +96,8 @@
         <?php endforeach;?>
     </div>
     <!-- lawyers END-->
+    <div class="row mt-5 px-3">
+        <?php get_pagination("avocat",3);?>
+    </div>
 </div>
 <!-- MAIN CONTENT END -->

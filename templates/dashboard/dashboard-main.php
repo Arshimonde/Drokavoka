@@ -9,5 +9,8 @@
         if(isset($_GET["section"]) && $_GET["section"] == "lawyers"):
             include "dashboard-lawyers.php";
         endif;
+        if(isset($_GET["section"]) && $_GET["section"] == "edit-lawyer"):
+            include "dashboard-edit-lawyer-profile.php";
+        endif;
     ?>
 </main>

@@ -156,8 +156,7 @@ function get_pagination($table,$elements_per_page=5,$page=1,$print_pagination=tr
     if(isset($table)):
         /* How much rows in $table */
         $element_count = db_count($table);
-        $pages_count = round($element_count / $elements_per_page);
-
+        $pages_count = ceil($element_count / $elements_per_page);
         /* Pagination Logic */
         if(!$print_pagination):
             /* CALCULATE OFFSET OF ROWS IN TABLE $table */
