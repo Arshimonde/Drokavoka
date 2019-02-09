@@ -106,7 +106,7 @@ endif;
                                         </td>
                                         <td>
                                             <button id="<?php echo $specialite["id"];?>" class="modify-speciality btn btn-secondary d-block mb-4 w-100">Modifier</button>
-                                            <button id="<?php echo $specialite["id"];?>" class="delete-speciality btn btn-danger d-block w-100">Suprimmer</button>
+                                            <a class="delete-element btn btn-danger d-block w-100" href="/dashboard.php?section=specialties&action=delete&id=<?php echo $specialite["id"];?>">Suprimmer</a>
                                         </td>
                                     </tr>
                                 <?php

@@ -4,37 +4,22 @@ jQuery(function($){
         /* GENERAL START */
         $('selectpicker').selectpicker();
         /* GENERAL END */
-        /* DELETE SPECIALITY START*/
-        $(".delete-speciality").on("click",function(){
-            var id = $(this).attr("id");
+
+        /* DELETE ELEMENT START*/
+        $(".delete-element").on("click",function(e){
+            e.preventDefault();
             /* alert */
-            swal("Etes vous sur que vous voulez suprimmer cette spécialité?", {
-                title:"Attention!",
-                icon:"warning",
-                buttons: {
-                  yes: {
-                    text: "Oui",
-                    value: "yes",
-                  },
-                  non:  {
-                    text: "Non",
-                    value: "no",
-                  },
-                  
-                },
-              })
-              .then((value) => {
+            delete_warning("Etes vous sur que vous voulez suprimmer ?" , function(value){
                 switch (value) {
                   case "yes":
-                    if(window.location.href.indexOf("specialties")>-1){
-                        window.location.href = "/dashboard.php?section=specialties&action=delete&id="+id;
-                    }
+                      window.location.href = $(e.target).attr("href");
                     break;
                   default:break;
                 }
-              });
+            });
         });
-        /* DELETE SPECIALITY END*/
+        /* DELETE ELEMENT END*/
+
         /* MODIFY SPECIALITY START*/
         var animationEndEvent = 'animationend oAnimationEnd mozAnimationEnd webkitAnimationEnd';
         var animationClass = "animated pulse";
@@ -102,6 +87,28 @@ jQuery(function($){
     });
 
 });
+
+/* DELETE WARNING FUNCTION */
+function delete_warning(message , callback){
+  swal(message, {
+    title:"Attention!",
+    icon:"warning",
+    buttons: {
+      yes: {
+        text: "Oui",
+        value: "yes",
+      },
+      non:  {
+        text: "Non",
+        value: "no",
+      },
+      
+    },
+  })
+  .then((value) => {
+    callback(value);
+  });
+}
 /* FUNCTION TO VALIDATE INPUTS TAKS JQUERY OBJECT/SELECTOR AND RETURN FALSE OR TRUE */
 function bootstrap_validate_inputs($selector_inputs){
     let inputs_valid = true;

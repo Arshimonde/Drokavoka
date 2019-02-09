@@ -87,7 +87,7 @@
                         </ul>
                     </div>
                     <div class="card-footer bg-light border-top px-1 text-center">
-                        <a class="card-link d-inline-block btn btn-danger" href="/dashboard.php?section=lawyers&action=delete&id=<?php echo $lawyer['id'];?>">Suprimmer</a>
+                        <a class="delete-element card-link d-inline-block btn btn-danger" href="/dashboard.php?section=lawyers&action=delete&id=<?php echo $lawyer['id'];?>">Suprimmer</a>
                         <a class="card-link d-inline-block btn btn-secondary" href="/dashboard.php?section=edit-lawyer&id=<?php echo $lawyer['id'];?>">Modifier</a>
                     </div>
                 </div>
@@ -97,7 +97,10 @@
     </div>
     <!-- lawyers END-->
     <div class="row mt-5 px-3">
-        <?php get_pagination("avocat",3);?>
+        <?php 
+            if(count($lawyers)>0)
+            get_pagination("avocat",3);    
+        ?>
     </div>
 </div>
 <!-- MAIN CONTENT END -->

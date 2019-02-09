@@ -474,6 +474,20 @@ select.form-control-lg:not([size]):not([multiple]),
   border-top: none;
 }
     /*card end*/
+    /*Bouttons start*/
+    .btn-primary,.btn-primary:hover{
+      background-color: var(--drokavoka-bleu)!important;
+      border:0;
+      color:var(--drokavoka-white)!important;
+    }
+    .btn-primary:focus,
+    .btn-primary:visited,
+    .btn-primary:active,
+    .btn-primary:hover
+    {
+      box-shadow: 0 0 0 0.2rem var(--drokavoka-bleu-half-rgba);
+    }
+    /*Bouttons end*/
 /*BOOTSTRAP RESET END*/
 
 
@@ -838,14 +852,5 @@ select.form-control-lg:not([size]):not([multiple]),
   #lawyer-sign-up-form .form-control{
     font-size: 17px;
   }
-  #lawyer-sign-up-form .card-body .btn-primary{
-    background-color: var(--drokavoka-bleu);
-    border:0;
-    color:var(--drokavoka-white);
-  }
-  #lawyer-sign-up-form .card-body .btn-primary:focus,
-  #lawyer-sign-up-form .card-body .btn-primary:visited,
-  #lawyer-sign-up-form .card-body .btn-primary:active{
-    box-shadow: 0 0 0 0.2rem var(--drokavoka-bleu-half-rgba);
-  }
+
 /*ACCOUNT END*/
