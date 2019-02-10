@@ -32,7 +32,7 @@
     <div class="row">
         <!-- ILLUSTRAION START -->
         <div class="illustration col-xl-5 col-lg-5 col-md-5 col-sm-4 col-4">
-            <h1 class="text-center text-uppercase">Créer votre Compte</h1>
+            <h1 class="text-center text-uppercase">Portail Avocat</h1>
             <p class="text-center mt-4 mx-4">
                 Bienvenue sur le premier portail des avocats au Maroc.
             </p>

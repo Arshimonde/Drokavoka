@@ -91,6 +91,8 @@ function db_select($table,$where=null,$limit=null){
     if(isset($where) && !empty($where) ){
         $query .= " WHERE ".$where;
     }
+
+    //var_dump($query);
     
     $result = mysqli_query($app_db, $query );
     
@@ -329,23 +331,29 @@ function get_lawyer_specialties($id){
 /* DASHBOARD ALERT FUNCTION END*/
 
 /* Fonction pour le login de Avocat */
-function login($email, $password){
+function verifylogin($email, $password){
     
     if (isset($email) && isset($password) && !empty($email) && !empty($password)) {
     
-        $where = "email = ".$email;
-        $where = "And password = ".$password;
+        $where = "email = '".$email;
+        $where .= "' And password = '".$password."'";
         
-        $users = db_select("avocats",$where);
+        $users = db_select("avocat",$where);
         
-        if (count($users)>0) {
+        
+
+        if (count($users) >= 1){
             
-            header("location:/");
+            echo "<script>window.location.href = '/'</script>";
 
         }else {
-            echo "L'utilisateur n'existe pas!";
+            
+            echo "<script> swal('Oops' ,  'Utilisateur est introuvable !' ,  'error')</script>";
+
         }
 
+    }else {
+        echo "<script> swal('Oops' ,  'Un champ est vide ou mal saisie!' ,  'error')</script>";
     }
 
 }

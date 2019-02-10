@@ -1,6 +1,10 @@
 <?php
-    if(isset($_POST["email_login"])):  
-        
+    if(isset($_POST["email_login"]) && isset($_POST["password_login"])):
+        $email_login = $_POST["email_login"];
+        $password_login = $_POST["password_login"];
+
+        verifylogin($email_login, $password_login);
+
     endif;
 ?>
 <form id="lawyer-sign-in-form" method="POST" action="/account.php?type=lawyer" class="px-5 mt-4 needs-validation"
