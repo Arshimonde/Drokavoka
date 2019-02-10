@@ -10,7 +10,15 @@ function database_notfound_error($errno, $errstr,$error_file,$error_line,$error_
 }
 // set_error_handler("database_notfound_error");
 /* ERROR HANDLING END*/
-
+/* GET Base URL FUNCTION START*/
+function base_url(){
+    return sprintf(
+      "%s://%s",
+      isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ? 'https' : 'http',
+      $_SERVER['SERVER_NAME']
+    );
+  }
+/* GET Base URL FUNCTION END*/
 /* INIT DATABASE GLOBALLY START */
     /* read configuration file */
 $app_config_json = file_get_contents("app-config.json");
@@ -124,10 +132,14 @@ function db_update_row($table,$elements,$where){//elements keys should be as the
 /* UPDATE TABLE IN DATABASE END */
 
 /* DELETE FROM DATABASE START */
-function db_delete_row($table,$id){
+function db_delete_row($table,$id,$where = null){
     global $app_db;
-    $query = "DELETE FROM ".$table." WHERE id = ".$id;
-    // var_dump($query);
+    if(!isset($where)):
+        $query = "DELETE FROM ".$table." WHERE id = ".$id;
+    else:
+        $query = "DELETE FROM ".$table." ".$where;
+    endif;
+    //var_dump($query);
      $is_deleted = mysqli_query($app_db,$query);
      if($is_deleted) return true;
      return false;
@@ -262,7 +274,37 @@ function dashboard_alert($alert_type='Information',$alert_color='info',$message)
 
     return $html;
 }
+/* DASHBOARD ALERT FUNCTION END*/
 
+/* GET LAST INSERTED ROW ID START*/
+function get_last_inserted_id(){
+    global $app_db;
+    return mysqli_insert_id ( $app_db );
+}
+/* GET LAST INSERTED ROW ID END*/
+/* SAVE LAWYER IMAGE FUNCTION START*/
+function save_lawyer_image($file){
+    $file_name = $file["name"];
+    $file_type = $file["type"];
+    $file_size = $file["size"];
+    $file_temp_loc = $file["tmp_name"];
+
+    $destination = "public/lawyers_images/".$file_name;
+
+    if(move_uploaded_file($file_temp_loc,$destination)):
+        return $destination;
+    else:
+        return false;
+    endif;
+}
+/* SAVE LAWYER IMAGE FUNCTION END*/
+/* GET LAWYER IMAGE FUNCTION START*/
+function get_lawyer_image_url($id){
+    $product_img = db_select("avocat","id=".$id);
+    $img_url = $product_img[0]["photo"];
+    return empty($img_url)?false:$img_url;
+}
+/* GET LAWYER IMAGE FUNCTION END*/
     /* Get lawyer data */
 function get_lawyer_data($id){
     $table = "avocat";
@@ -284,5 +326,4 @@ function get_lawyer_specialties($id){
 
     return $specialites;
 }
-/* DASHBOARD ALERT FUNCTION END*/
 ?>

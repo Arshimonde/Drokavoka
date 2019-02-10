@@ -44,7 +44,15 @@
                 <div class="card">
                     <!-- lawyer image & name -->
                     <div class="card-header bg-light text-center border-bottom pb-2 px-0">
-                        <img class="img-fluid img-thumbnail p-2 w-25 rounded-circle border" src="../../images/lawyer.png" alt="lawyer image">
+                        <?php
+                            if(isset($lawyer_data["photo"]) && !empty($lawyer_data["photo"])):
+                                $lawyer_image = base_url()."/".$lawyer_data["photo"];
+                            else: 
+                                $lawyer_image = "../../images/lawyer.png";
+                            endif;
+                        ?>
+                        <div class="circle-image mx-auto" style="background-image:url(<?= $lawyer_image?>)">
+                        </div>
                         <h6 class="mt-1 mb-0 card-subtitle text-muted">
                             <?php 
                                 $gender = $lawyer_data["gender"] == 'mr' ?"Monsieur": "Madame";

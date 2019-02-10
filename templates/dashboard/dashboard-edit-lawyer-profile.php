@@ -1,45 +1,34 @@
-<!-- GET USER DATA START -->
-<?php 
-    if(isset($_GET["id"])):
-        $lawyer_data = get_lawyer_data($_GET["id"]);
-        $lawyer_specialites = get_lawyer_specialties($_GET["id"]); 
-    endif;
-?>
-<!-- GET USER DATA END -->
-
 <!-- /*MODIFY LAWYER DATA START*/ -->
 <?php
-    if(isset($_POST["email"])):  
+    if(isset($_POST["email"])): 
+        
+
         $speciality_ids = $_POST["id_specialite"];
         unset($_POST["id_specialite"]);
         unset($_POST["confirm_password"]);
         $elements = $_POST;
-        /* insert lawyer into 'avocat' mysql table */
-        $is_lawyer_inserted = db_insert('avocat',$elements);
-        global $app_db;
-        $lawyer_id = mysqli_insert_id($app_db);
-        
-        /* insert lawyer and specialites in 'avocat_specialite' mysql table*/
-        foreach($speciality_ids as $speciality_id):
-            $is_lawyer_inserted = db_insert('avocat_specialite',array(
-                                    "id_avocat" => $lawyer_id,
-                                    "id_specialite" =>intval($speciality_id)
-                                  ));
-        endforeach;
-
-        // Redirect on account creation
-        if($is_lawyer_inserted):
-            header('Location: /index.php');
+        if(isset($_FILES["photo"]["name"]) && !empty($_FILES["photo"]["name"])):
+            $saved_image_url = save_lawyer_image($_FILES["photo"]);
+            $elements["photo"] = $saved_image_url;
         endif;
-
+        /* modify lawyer into 'avocat' mysql table */
+        $is_modified = db_update_row('avocat',$elements,"id = ".intval($_GET["id"]));
+        /* Modify lawyer and specialites in 'avocat_specialite' mysql table*/
+        if($is_modified):
+            //delete all specialites
+            foreach($speciality_ids as $speciality_id):
+                db_delete_row("avocat_specialite",null,"WHERE id_avocat = ".$_GET["id"]);
+            endforeach;
+            //insert all specialties
+            foreach($speciality_ids as $speciality_id):
+                db_insert('avocat_specialite',array(
+                    "id_avocat" => $_GET["id"],
+                    "id_specialite" =>intval($speciality_id)
+                  )
+                );
+            endforeach;
+        endif;
     endif;
-        /* modify specialite */
-        if(isset($_GET["id"])  && isset($_GET["action"]) && $_GET["action"] == "modify"):
-            $elements = array();
-            $elements["specialite_name"] = $_POST["specialite_name"];
-            $elements["specialite_desc"] = $_POST["specialite_desc"];
-            $is_modified = db_update_row("specialite",$elements,("id=".$_GET["id"]));
-        endif;
     /* modified */
     if(isset($is_modified ) && $is_modified ):
         $alert_type = "Modification avec Succés";
@@ -50,7 +39,14 @@
     endif;
 ?>
 <!-- /*MODIFY LAWYER DATA END*/ -->
-
+<!-- GET USER DATA START -->
+<?php 
+    if(isset($_GET["id"])):
+        $lawyer_data = get_lawyer_data($_GET["id"]);
+        $lawyer_specialites = get_lawyer_specialties($_GET["id"]); 
+    endif;
+?>
+<!-- GET USER DATA END -->
 <!-- MAIN CONTENT START -->
 <div class="container-fluid main-content pb-4">
     <!-- PAGE HEADER START -->
@@ -63,10 +59,46 @@
     <!-- PAGE HEADER END -->
 
     <!-- FORM START -->
-    <form method="POST" action="dashboard.php?section=edit-lawyer" class="row px-2 mt-4 needs-validation" novalidate >
-        <input type="hidden" name="id" value="<?php echo $_GET["id"]; ?>">
+    <form method="POST" action="dashboard.php?section=edit-lawyer&id=<?php echo $_GET["id"]; ?>" class="row px-2 mt-4" enctype="multipart/form-data">
         <div class="col-lg-6">
             <h4>Personal informations Settings</h4>
+            <!-- Photo Image START-->
+            <div class="row mb-2 align-items-center mr-0">
+                <label class="col-lg-12">Photo</label>
+                <?php
+                    if(isset($lawyer_data["photo"]) && !empty($lawyer_data["photo"])):
+                        $lawyer_image = base_url()."/".$lawyer_data["photo"];
+                    else: 
+                        $lawyer_image = "../../images/lawyer.png";
+                    endif;
+                ?>
+                <div class="col-lg-2">
+                    <div class="circle-image rounded-0" style="background-image:url(<?= $lawyer_image?>)">
+                    </div>
+                </div>
+                <div class="form-group col-lg-10 pl-4 mb-0">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class="far fa-images"></i>
+                            </span>
+                        </div>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="photo" name="photo">
+                            <label class="text-truncate custom-file-label pt-2" for="photo" >
+                                <?php if(empty($lawyer_data["photo"])): ?>
+                                    Choose file
+                                <?php   
+                                    else: 
+                                        echo $lawyer_data["photo"];
+                                    endif;
+                                ?>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Photo Image END-->
             <!-- SEXE START -->
             <?php $gender =  $lawyer_data["gender"];?>
             <div class="form-group col-lg-12 pl-0">
@@ -79,44 +111,40 @@
                 </div>
                 <div class="custom-control custom-radio custom-control-inline">
                     <input class="custom-control-input" type="radio" name="gender" id="mme" value="mm" <?php 
-                        if($gender=="mme") echo "checked";
+                        if($gender=="mm") echo "checked";
                     ?>>
                     <label class="custom-control-label" for="mme">Madame</label>
                 </div>
             </div>
             <!-- SEXE END -->
-            <!-- FIRST NAME START-->
-            <div class="form-group col-lg-6 float-left pl-0">
-                <label for="first_name">Prénom</label>
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <div class="input-group-text">
-                            <i class="fas fa-user fa-1x"></i>
+            <div class="row mx-0">
+                <!-- FIRST NAME START-->
+                <div class="form-group col-lg-6 float-left pl-0">
+                    <label for="first_name">Prénom</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <i class="fas fa-user fa-1x"></i>
+                            </div>
                         </div>
-                    </div>
-                    <input type="text" class="form-control" id="first_name" name="first_name" required value="<?php echo $lawyer_data["first_name"];?>"/>
-                    <div class="invalid-feedback">
-                        Le prénom est requis
+                        <input type="text" class="form-control" id="first_name" name="first_name" value="<?php echo $lawyer_data["first_name"];?>"  required/>
                     </div>
                 </div>
-            </div>
-            <!-- FIRST NAME END-->
-            <!-- LAST NAME START-->
-            <div class="form-group col-lg-6 float-left pl-0">
-                <label for="last_name">Nom</label>
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <div class="input-group-text">
-                            <i class="fas fa-user fa-1x"></i>
+                <!-- FIRST NAME END-->
+                <!-- LAST NAME START-->
+                <div class="form-group col-lg-6 float-left pl-0">
+                    <label for="last_name">Nom</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <i class="fas fa-user fa-1x"></i>
+                            </div>
                         </div>
-                    </div>
-                    <input type="text" class="form-control" id="last_name" name="last_name" required value="<?php echo $lawyer_data["last_name"];?>"/>
-                    <div class="invalid-feedback">
-                        Le nom est requis
+                        <input type="text" class="form-control" id="last_name" name="last_name" value="<?php echo $lawyer_data["last_name"];?>"  required/>
                     </div>
                 </div>
+                <!-- LAST NAME END-->
             </div>
-            <!-- LAST NAME END-->
     
             <!-- SPECIALITE START -->
             <div class="form-group col-lg-12 pl-0">
@@ -153,10 +181,7 @@
                             <i class="fas fa-map-marker-alt fa-1x"></i>
                         </div>
                     </div>
-                    <input type="text" class="form-control" id="address" name="address" required  value="<?php echo $lawyer_data["address"];?>"/>
-                    <div class="invalid-feedback">
-                        L'adresse est requise
-                    </div>
+                    <input type="text" class="form-control" id="address" name="address" value="<?php echo $lawyer_data["address"];?>" required/>
                 </div>                                  
             </div>
             <!-- ADDRESS END-->
@@ -169,10 +194,7 @@
                             <i class="fas fa-building fa-1x"></i>
                         </div>
                     </div>
-                    <input type="text" class="form-control" id="city" name="city" required value="<?php echo $lawyer_data["city"];?>"/>
-                    <div class="invalid-feedback">
-                        La ville est requise
-                    </div>
+                    <input type="text" class="form-control" id="city" name="city" value="<?php echo $lawyer_data["city"];?>" required/>
                 </div>    
             </div>
             <!-- CITY END-->
@@ -199,10 +221,7 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="email"><i class="fas fa-envelope  fa-1x"></i></span>
                     </div>
-                    <input type="email" class="form-control" id="email" name="email" required value="<?php echo $lawyer_data["email"];?>"/>
-                    <div class="invalid-feedback">
-                        Veuillez entrez un email correct
-                    </div>
+                    <input type="email" class="form-control" id="email" name="email"  value="<?php echo $lawyer_data["email"];?>" required/>
                 </div>
             </div>
             <!-- EMAIL END-->
@@ -215,10 +234,7 @@
                             <i class="fas fa-key fa-1x"></i>
                         </span>
                     </div>
-                    <input type="password" class="form-control" id="password" name="password" required value="<?php echo $lawyer_data["password"];?>"/>
-                    <div class="invalid-feedback">
-                        Le mot de passe est requis
-                    </div>
+                    <input type="password" class="form-control" id="password" name="password" value="<?php echo $lawyer_data["password"];?>" required/>
                 </div>
             </div>
             <!-- PASSWORD END-->
@@ -232,10 +248,7 @@
                             <i class="fas fa-key fa-1x"></i>
                         </span>
                     </div>
-                    <input type="password" class="form-control" id="confirm_password" name="confirm_password" required value="<?php echo $lawyer_data["password"];?>"/>
-                    <div class="invalid-feedback">
-                        Le mot de passe n'est pas confirmé ou vide 
-                    </div>
+                    <input type="password" class="form-control" id="confirm_password" name="confirm_password" value="<?php echo $lawyer_data["password"];?>" required/>
                 </div>
             </div>
             <!-- CONFIRM PASSWORD END-->

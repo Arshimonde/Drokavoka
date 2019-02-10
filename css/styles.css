@@ -112,7 +112,15 @@ h6,
 p {
     margin-bottom: 1.75rem;
 }
-  
+
+.circle-image{
+  width:90px;
+  height:90px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  border-radius: 50%;
+}
 /*GENERAL CSS END*/
 /*BOOTSTRAP RESET START*/
     /*input group start*/
