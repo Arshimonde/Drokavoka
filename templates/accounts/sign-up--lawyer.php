@@ -20,7 +20,14 @@
 
         // Redirect on account creation
         if($is_lawyer_inserted):
-            header('Location: /index.php');
+            $desc = "<b>".$elements["first_name"] ." ".$elements["last_name"]."</b> à rejoindre la communauté de Drokavoka";
+            db_insert("notification",array(
+                    "type"=> "lawyer_insert",
+                    "title" => "Nouveau avocat",
+                    "description" => $desc
+                )
+            );
+           // header('Location: /account.php?type=lawyer');
         endif;
 
     endif;

@@ -17,8 +17,6 @@
 <!-- DELETE LAWYER END -->
 
 
-
-
 <!-- MAIN CONTENT START -->
 <div class="container-fluid main-content pb-4">
     <!-- PAGE HEADER START -->

@@ -18,38 +18,65 @@
             <!-- NAVBAR NOTIFACATION START -->
             <li class="nav-item border-right dropdown notifications">
                 <a class="nav-link nav-link-icon text-center" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <?php
+                    $notifications = db_select("notification","checked = false");
+                ?>
                 <div class="nav-link-icon__wrapper">
                     <i class="material-icons">&#xE7F4;</i>
-                    <span class="badge badge-pill badge-danger">2</span>
+                    <span class="badge badge-pill badge-danger">
+                        <?=count( $notifications)?>
+                    </span>
                 </div>
                 </a>
-                <div class="dropdown-menu dropdown-menu-small" aria-labelledby="dropdownMenuLink">
-                <a class="dropdown-item" href="#">
-                    <div class="notification__icon-wrapper">
-                        <div class="notification__icon">
-                            <i class="material-icons">&#xE6E1;</i>
+                <!-- READING ALL NOTIFICATION START -->
+                <div class="dropdown-menu dropdown-menu-small">
+                    <?php
+                        $notifications = db_select("notification","checked = false");
+                        foreach($notifications as $not):
+ 
+                            $icon = "fab fa-black-tie fa-1x";
+                            $link = "/dashboard.php";
+                            switch($not["type"]){
+                                case "lawyer_insert":{
+                                    $icon = "fab fa-black-tie fa-1x";
+                                    $link = "/dashboard.php?not_id=".$not['id'];$link .= "&section=lawyers";
+                                    break;
+                                }    
+                            }
+                    ?>
+                    <a 
+                        class="dropdown-item dashboard-notification" 
+                        href="<?=$link?>"
+                    >
+                        <div class="notification__icon-wrapper">
+                            <div class="notification__icon">
+                                <i class="<?=$icon?>"></i>
+                            </div>
                         </div>
-                    </div>
-                    <div class="notification__content">
-                        <span class="notification__category">Analytics</span>
-                        <p>
-                            Your clients are satisfied by <span class="text-success text-semibold">28%</span> in the last week. Great job!
-                        </p>
-                    </div>
-                </a>
-                <a class="dropdown-item" href="#">
-                    <div class="notification__icon-wrapper">
-                    <div class="notification__icon">
-                        <i class="material-icons">&#xE8D1;</i>
-                    </div>
-                    </div>
-                    <div class="notification__content">
-                    <span class="notification__category">Satisfaction</span>
-                    <p><span class="text-success text-semibold">5.52%</span> Your love rate is increasing </p>
-                    </div>
-                </a>
-                <a class="dropdown-item notification__all text-center" href="#"> View all Notifications </a>
+                        <div class="notification__content">
+                            <span class="notification__category">
+                                <?=$not["title"]?>
+                            </span>
+                            <p>
+                                <?=$not["description"]?>
+                            </p>
+                        </div>
+                    </a>
+                    <?php
+                        endforeach;
+
+                        if(count( $notifications)==0):
+                    ?>
+                        <button href="#" class="dropdown-item dashboard-notification" disabled >   
+                            <div class="notification__content text-muted text-center">
+                                <p>
+                                    Aucune notification pour le moment
+                                </p>
+                            </div>
+                        </button>
+                    <?php endif;?>
                 </div>
+                <!-- READING ALL NOTIFICATION END -->
             </li>
             <!-- NAVBAR NOTIFACATION END -->
             <!-- USER AVATAR START -->
