@@ -32,15 +32,15 @@
     <div class="row">
         <!-- ILLUSTRAION START -->
         <div class="illustration col-xl-5 col-lg-5 col-md-5 col-sm-4 col-4">
-            <h1 class="text-center text-uppercase">Crée Compte</h1>
+            <h1 class="text-center text-uppercase">Créer votre Compte</h1>
             <p class="text-center mt-4 mx-4">
-                Lorizzle ipsizzle dolizzle sizzle amizzle, brizzle adipiscing elit. Nullizzle black velizzle, ghetto volutpizzle, suscipizzle phat, bow wow wow vizzle, fizzle.
+                Bienvenue sur le premier portail des avocats au Maroc.
             </p>
         </div>
         <!-- ILLUSTRAION END -->
 
         <!-- SIGN UP FORM START -->
-        <div class="lawyer-sign-up-section col-xl-7 col-lg-7 col-md-7 col-sm-8 col-8" id="tabs">
+        <div class="lawyer-sign-up-section col-xl-7 col-lg-7 col-md-7 col-sm-8 col-8 mt-3" id="tabs">
 
             
         <nav>

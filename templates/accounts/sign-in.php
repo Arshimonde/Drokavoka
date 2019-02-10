@@ -45,7 +45,7 @@
                     </div>
                     <!-- PASSWORD END-->
 
-                    <a class="float-right btn btn-primary step-1-button">Suivant</a>
+                    <a class="float-right btn btn-primary step-1-button">Connexion</a>
                 </div>
             </div>
         </div>
