@@ -326,4 +326,27 @@ function get_lawyer_specialties($id){
 
     return $specialites;
 }
+/* DASHBOARD ALERT FUNCTION END*/
+
+/* Fonction pour le login de Avocat */
+function login($email, $password){
+    
+    if (isset($email) && isset($password) && !empty($email) && !empty($password)) {
+    
+        $where = "email = ".$email;
+        $where = "And password = ".$password;
+        
+        $users = db_select("avocats",$where);
+        
+        if (count($users)>0) {
+            
+            header("location:/");
+
+        }else {
+            echo "L'utilisateur n'existe pas!";
+        }
+
+    }
+
+}
 ?>
