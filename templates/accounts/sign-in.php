@@ -1,4 +1,9 @@
-<form id="lawyer-sign-up-form" method="POST" action="/account.php?type=lawyer" class="px-5 mt-4 needs-validation"
+<?php
+    if(isset($_POST["email_login"])):  
+        
+    endif;
+?>
+<form id="lawyer-sign-in-form" method="POST" action="/account.php?type=lawyer" class="px-5 mt-4 needs-validation"
     novalidate>
     <!-- STEPPER START-->
     <div class="accordion" id="lawyer-sign-up-stepper">
@@ -20,7 +25,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="email"><i class="fas fa-envelope  fa-1x"></i></span>
                             </div>
-                            <input type="email" class="form-control" id="email" name="email" required />
+                            <input type="email" class="form-control" id="email_login" name="email_login" required />
                             <div class="invalid-feedback">
                                 Veuillez entrez un email correct
                             </div>
@@ -37,7 +42,7 @@
                                     <i class="fas fa-key fa-1x"></i>
                                 </span>
                             </div>
-                            <input type="password" class="form-control" id="password" name="password" required />
+                            <input type="password" class="form-control" id="password_login" name="password_login" required />
                             <div class="invalid-feedback">
                                 Le mot de passe est requis
                             </div>
@@ -45,7 +50,7 @@
                     </div>
                     <!-- PASSWORD END-->
 
-                    <a class="float-right btn btn-primary step-1-button">Connexion</a>
+                    <Button type="submit" class="float-right btn btn-primary step-1-button">Connexion</Button>
                 </div>
             </div>
         </div>
