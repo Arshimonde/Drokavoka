@@ -7,7 +7,7 @@
 
     endif;
 ?>
-<form id="lawyer-sign-in-form" method="POST" action="/account.php?type=lawyer" class="px-5 mt-4 needs-validation"
+<form id="lawyer-sign-in-form" method="POST" action="/account.php?type=lawyer" class="px-5  needs-validation"
     novalidate>
     <!-- STEPPER START-->
     <div class="accordion" id="lawyer-sign-up-stepper">
@@ -16,7 +16,9 @@
         <div class="card step-1">
             <div class="card-header p-0 border-bottom">
                 <a class="btn text-left d-block px-4 py-2" data-target="#account-setup">
-                    <span class="number-circle mr-2">1</span>
+                    <span class="number-circle mr-2">
+                        <i class="fas fa-lock-open"></i>
+                    </span>
                     S'authentifier
                 </a>
             </div>

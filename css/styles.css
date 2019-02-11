@@ -121,6 +121,21 @@ p {
   background-position: center;
   border-radius: 50%;
 }
+    /*typography*/
+.text-color-secondary{
+    color:var(--drokavoka-lighter-bleu)!important;
+}
+.text-color-primary{
+    color:var(--drokavoka-bleu);
+}
+.bg-color-primary{
+    background-color:var(--drokavoka-bleu);
+    color:var(--drokavoka-white);
+}
+.bg-color-secondary{
+    background-color:var(--drokavoka-lighter-bleu);
+    color:var(--drokavoka-white);
+}
 /*GENERAL CSS END*/
 /*BOOTSTRAP RESET START*/
     /*input group start*/
@@ -853,6 +868,14 @@ select.form-control-lg:not([size]):not([multiple]),
     color:var(--drokavoka-white);
     font-weight: bold;
     font-size:17px;
+  }
+  .lawyer-sign-up-section .nav-link {
+    color: var(--drokavoka-lighter-bleu);
+    background-color:rgba(var(--drokavoka-bleu-rgb),0.1);
+  }
+  .lawyer-sign-up-section .nav-link.active {
+    border-top: 3px solid var(--drokavoka-bleu);
+    color: var(--drokavoka-bleu);
   }
   #lawyer-sign-up-form .card-header a{
     font-size: 17px;

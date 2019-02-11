@@ -1,4 +1,4 @@
-<form id="lawyer-sign-up-form" method="POST" action="/account.php?type=lawyer" class="px-5 mt-4 needs-validation"
+<form id="lawyer-sign-up-form" method="POST" action="/account.php?type=lawyer" class="px-5 needs-validation"
     novalidate>
     <!-- STEPPER START-->
     <div class="accordion" id="lawyer-sign-up-stepper">

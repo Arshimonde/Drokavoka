@@ -50,14 +50,14 @@
         <div class="lawyer-sign-up-section col-xl-7 col-lg-7 col-md-7 col-sm-8 col-8 mt-3" id="tabs">
 
             
-        <nav>
+        <nav class="px-5">
             <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
                 <a class="nav-item nav-link active"  data-toggle="tab" href="#login" role="tab" >Login</a>
                 <a class="nav-item nav-link" data-toggle="tab" href="#register" role="tab" >Register</a>
         
             </div>
         </nav>
-        <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
+        <div class="tab-content pb-3 pt-0 px-3 px-sm-0" id="nav-tabContent">
             <div class="tab-pane fade" id="register" role="tabpanel" >
                 <?php include("sign-up.php");?>
             </div>
