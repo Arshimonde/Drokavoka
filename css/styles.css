@@ -121,6 +121,12 @@ p {
   background-position: center;
   border-radius: 50%;
 }
+.square-image {
+  max-width: 157px!important;
+  width: 100%;
+  margin: 0 auto;
+  margin-top: 5px;
+}
     /*typography*/
 .text-color-secondary{
     color:var(--drokavoka-lighter-bleu)!important;
@@ -885,3 +891,7 @@ select.form-control-lg:not([size]):not([multiple]),
   }
 
 /*ACCOUNT END*/
+.lawyer-ligne {
+    border-left: 4px solid var(--drokavoka-bleu);
+    color: var(--drokavoka-bleu);
+}

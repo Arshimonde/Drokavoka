@@ -1,7 +1,7 @@
     
     <!-- NOTE: all styles are just temprorary -->
     
-    <footer class="position-absolute w-100" style="bottom:0">
+    <footer class=" w-100">
         <!-- FOOTER CONTENT HERE !!!!!!!!!!! -->
         <?php if(get_current_page() != "dashboard" && get_current_page() != "account"): ?>
         <div class="bg-dark text-center mb-0">

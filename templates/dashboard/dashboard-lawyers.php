@@ -32,13 +32,13 @@
         <?php
             /* get all specialite */
             $current_page = isset($_GET["page"])?((int)$_GET["page"]) : 1;
-            $mysql_limit = get_pagination("avocat",3,$current_page,false);
+            $mysql_limit = get_pagination("avocat",8,$current_page,false);
             $lawyers = db_select("avocat",null,$mysql_limit);
             foreach($lawyers as $lawyer):
         ?>
             <!-- lawyer start -->
             <?php $lawyer_data = get_lawyer_data($lawyer["id"]);?>
-            <div class="col-lg-4 mt-4 lawyer">
+            <div class="col-lg-3 mt-4 lawyer">
                 <div class="card">
                     <!-- lawyer image & name -->
                     <div class="card-header bg-light text-center border-bottom pb-2 px-0">
@@ -93,7 +93,7 @@
                         </ul>
                     </div>
                     <div class="card-footer bg-light border-top px-1 text-center">
-                        <a class="delete-element card-link d-inline-block btn btn-danger" href="/dashboard.php?section=lawyers&action=delete&id=<?php echo $lawyer['id'];?>">Suprimmer</a>
+                        <a class="delete-element card-link d-inline-block btn btn-danger" href="/dashboard.php?section=lawyers&action=delete&id=<?php echo $lawyer['id'];?>">Supprimer</a>
                         <a class="card-link d-inline-block btn btn-secondary" href="/dashboard.php?section=edit-lawyer&id=<?php echo $lawyer['id'];?>">Modifier</a>
                     </div>
                 </div>
@@ -105,7 +105,7 @@
     <div class="row mt-5 px-3">
         <?php 
             if(count($lawyers)>0)
-            get_pagination("avocat",3);    
+            get_pagination("avocat",8);    
         ?>
     </div>
 </div>

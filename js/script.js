@@ -11,6 +11,8 @@ jQuery(function($){
                 $(this).next("label").text(name);
             }
         );
+        // TOOLTIP
+          $('[data-toggle="tooltip"]').tooltip()
         /* GENERAL END */
 
         /* DELETE ELEMENT START*/
