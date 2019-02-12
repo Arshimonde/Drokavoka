@@ -31,9 +31,32 @@
     <div class="row">
         <?php
             /* get all specialite */
+            $where = " 1 = 1 ";
+            $table = "avocat av";
+            $filtring = false;
+            if(isset($_POST["filter_first_name"]) && !empty($_POST["filter_first_name"])):
+                $where .= " AND lower(first_name) = '". strtolower($_POST["filter_first_name"]) ."'";
+                $filtring = true;
+            endif;
+            if(isset($_POST["filter_last_name"]) && !empty($_POST["filter_last_name"])):
+                $where .= " AND lower(last_name) = '".strtolower($_POST["filter_last_name"]) ."'";
+                $filtring = true;
+            endif;
+            if(isset($_POST["filter_city"]) &&  !empty($_POST["filter_city"])):
+                $where .= " AND lower(city) = '".strtolower($_POST["filter_city"])."'";
+                $filtring = true;
+            endif;
+            if(isset($_POST["filter_speciality"]) &&  !empty($_POST["filter_speciality"])):
+                if($_POST["filter_speciality"] != "-1"):
+                    $table .= " , avocat_specialite a_s";
+                    $where .= " AND a_s.id_avocat = av.id";
+                    $where .= " AND a_s.id_specialite = ".$_POST["filter_speciality"];
+                    $filtring = true;
+                endif;
+            endif;
             $current_page = isset($_GET["page"])?((int)$_GET["page"]) : 1;
             $mysql_limit = get_pagination("avocat",8,$current_page,false);
-            $lawyers = db_select("avocat",null,$mysql_limit);
+            $lawyers = db_select($table,$where,$mysql_limit);
             foreach($lawyers as $lawyer):
         ?>
             <!-- lawyer start -->
@@ -104,8 +127,16 @@
     <!-- lawyers END-->
     <div class="row mt-5 px-3">
         <?php 
-            if(count($lawyers)>0)
-            get_pagination("avocat",8);    
+            if(count($lawyers)>0):
+                $elements = 8;
+                $lawyers_count = null;
+                $page = 1;
+                if($filtring):
+                    $lawyers_count = count($lawyers);
+                    $page = $_GET["page"];
+                endif;
+                get_pagination("avocat",$elements,$page,true,$lawyers_count);
+            endif;    
         ?>
     </div>
 </div>

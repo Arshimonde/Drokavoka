@@ -1,33 +1,41 @@
 <!-- SAVE LAWYER IN DATABASE START -->
 <?php
     if(isset($_POST["email"])):  
-        $speciality_ids = $_POST["id_specialite"];
-        unset($_POST["id_specialite"]);
-        unset($_POST["confirm_password"]);
-        $elements = $_POST;
-        /* insert lawyer into 'avocat' mysql table */
-        $is_lawyer_inserted = db_insert('avocat',$elements);
-        global $app_db;
-        $lawyer_id = mysqli_insert_id($app_db);
-        
-        /* insert lawyer and specialites in 'avocat_specialite' mysql table*/
-        foreach($speciality_ids as $speciality_id):
-            $is_lawyer_inserted = db_insert('avocat_specialite',array(
-                                    "id_avocat" => $lawyer_id,
-                                    "id_specialite" =>intval($speciality_id)
-                                  ));
-        endforeach;
+        if(isEmailExists($_POST["email"])):
+            echo "<script> swal('Oops' ,  'Email existe déja !' ,  'error')</script>";
+        else:
+            $speciality_ids = $_POST["id_specialite"];
+            unset($_POST["id_specialite"]);
+            unset($_POST["confirm_password"]);
+            $elements = $_POST;
+            /* insert lawyer into 'avocat' mysql table */
+            $is_lawyer_inserted = db_insert('avocat',$elements);
+            global $app_db;
+            $lawyer_id = mysqli_insert_id($app_db);
+            
+            /* insert lawyer and specialites in 'avocat_specialite' mysql table*/
+            foreach($speciality_ids as $speciality_id):
+                $is_lawyer_inserted = db_insert('avocat_specialite',array(
+                                        "id_avocat" => $lawyer_id,
+                                        "id_specialite" =>intval($speciality_id)
+                                    ));
+            endforeach;
 
-        // Redirect on account creation
-        if($is_lawyer_inserted):
-            $desc = "<b>".$elements["first_name"] ." ".$elements["last_name"]."</b> à rejoindre la communauté de Drokavoka";
-            db_insert("notification",array(
-                    "type"=> "lawyer_insert",
-                    "title" => "Nouveau avocat",
-                    "description" => $desc
-                )
-            );
-           // header('Location: /account.php?type=lawyer');
+            // Redirect on account creation
+            if($is_lawyer_inserted):
+                $desc = "<b>".$elements["first_name"] ." ".$elements["last_name"]."</b> à rejoindre la communauté de Drokavoka";
+                $description = array(
+                    "desc"=>$desc,
+                    "lawyer_id"=>$lawyer_id
+                );
+                db_insert("notification",array(
+                        "type"=> "lawyer_insert",
+                        "title" => "Nouveau avocat",
+                        "description" => serialize($description)
+                    )
+                );
+                header('Location: /account.php?type=lawyer');
+            endif;
         endif;
 
     endif;
@@ -52,8 +60,8 @@
             
         <nav class="px-5">
             <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
-                <a class="nav-item nav-link active"  data-toggle="tab" href="#login" role="tab" >Login</a>
-                <a class="nav-item nav-link" data-toggle="tab" href="#register" role="tab" >Register</a>
+                <a class="nav-item nav-link active"  data-toggle="tab" href="#login" role="tab" >S'authentifier</a>
+                <a class="nav-item nav-link" data-toggle="tab" href="#register" role="tab" >S'inscrire</a>
         
             </div>
         </nav>

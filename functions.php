@@ -83,16 +83,16 @@ function db_select($table,$where=null,$limit=null){
     global $app_db;
     $table_data = array();
     $query = "SELECT * FROM ".$table;
+    
+    if(isset($where) && !empty($where) ){
+        $query .= " WHERE ".$where;
+    }
 
     if(isset($limit) && !empty($limit) ){
         $query .= " LIMIT ".$limit;
     }
 
-    if(isset($where) && !empty($where) ){
-        $query .= " WHERE ".$where;
-    }
-
-    //var_dump($query);
+    // var_dump($query);
     
     $result = mysqli_query($app_db, $query );
     
@@ -166,10 +166,10 @@ function db_count($table){
 /* COUNT A TABLE FROM DATABASE END */
 
 /* PAGINATE DATA START*/
-function get_pagination($table,$elements_per_page=5,$page=1,$print_pagination=true){
+function get_pagination($table,$elements_per_page=5,$page=1,$print_pagination=true,$how_much = null){
     if(isset($table)):
         /* How much rows in $table */
-        $element_count = db_count($table);
+        $element_count = isset($how_much)?$how_much:db_count($table);
         $pages_count = ceil($element_count / $elements_per_page);
         /* Pagination Logic */
         if(!$print_pagination):
@@ -329,6 +329,16 @@ function get_lawyer_specialties($id){
     return $specialites;
 }
 /* DASHBOARD ALERT FUNCTION END*/
+
+/* EMAIL EXISTS START */
+function isEmailExists($email){
+    $email_count = db_select("avocat","email = '".$email."'");
+    if(count($email_count)>0):
+        return true;
+    endif;
+    return false;
+}
+/* EMAIL EXISTS END */
 
 /* Fonction pour le login de Avocat */
 function verifylogin($email, $password){

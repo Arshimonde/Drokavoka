@@ -3,15 +3,18 @@
     <!-- Main Navbar -->
     <nav class="navbar align-items-stretch navbar-light flex-md-nowrap p-0">
         <!-- SEARCH FORM START -->
-        <form action="#" class="main-navbar__search w-100 d-none d-md-flex d-lg-flex">
-            <div class="input-group input-group-seamless ml-3">
-                <div class="input-group-prepend">
-                <div class="input-group-text">
-                    <i class="fas fa-search"></i>
-                </div>
-                </div>
-                <input class="navbar-search form-control" type="text" placeholder="Search for something..." aria-label="Search"> 
-            </div>
+        <form action="/dashboard.php?section=lawyers&page=1" method="post" class="main-navbar__search w-100 row d-none d-md-flex d-lg-flex align-items-center mx-0">
+            <?php
+                if(isset($_GET["section"])):
+                    switch ($_GET["section"]){
+                        case "lawyers":{
+                            echo "<input type='hidden' value='lawyers' name='section'/>";
+                            include "dashboard-search-lawyer.php";
+                            break;
+                        }
+                    }
+                endif;
+            ?>
         </form>
         <!-- SEARCH FORM END-->
         <ul class="navbar-nav border-left flex-row ">
@@ -29,17 +32,20 @@
                 </div>
                 </a>
                 <!-- READING ALL NOTIFICATION START -->
-                <div class="dropdown-menu dropdown-menu-small">
+                <div class="dropdown-menu dropdown-menu-small notifications-container">
                     <?php
                         $notifications = db_select("notification","checked = false");
                         foreach($notifications as $not):
  
                             $icon = "fab fa-black-tie fa-1x";
                             $link = "/dashboard.php";
+                            $desc_array = unserialize($not["description"]);
+                            $desc = $desc_array["desc"];
                             switch($not["type"]){
                                 case "lawyer_insert":{
                                     $icon = "fab fa-black-tie fa-1x";
-                                    $link = "/dashboard.php?not_id=".$not['id'];$link .= "&section=lawyers";
+                                    $id = $desc_array["lawyer_id"];
+                                    $link = "/dashboard.php?not_id=".$not['id'];$link .= "&section=edit-lawyer&id=".$id;
                                     break;
                                 }    
                             }
@@ -58,7 +64,7 @@
                                 <?=$not["title"]?>
                             </span>
                             <p>
-                                <?=$not["description"]?>
+                                <?=$desc?>
                             </p>
                         </div>
                     </a>

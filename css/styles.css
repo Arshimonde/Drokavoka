@@ -144,6 +144,7 @@ p {
 }
 /*GENERAL CSS END*/
 /*BOOTSTRAP RESET START*/
+
     /*input group start*/
 .form-control-sm,
 .input-group-sm>.form-control,
@@ -354,74 +355,74 @@ select.form-control-lg:not([size]):not([multiple]),
 }
     /*input group end*/
     /*form control start*/
-.form-control {
-  height: auto;
-  padding: 0.4375rem 0.75rem;
-  font-size: 0.8125rem;
-  line-height: 1.5;
-  color: #495057;
-  background-color: #fff;
-  border: 1px solid #e1e5eb;
-  font-weight: 300;
-  will-change: border-color, box-shadow;
-  border-radius: 0rem;
-  box-shadow: none;
-  transition: box-shadow 250ms cubic-bezier(0.27, 0.01, 0.38, 1.06), border 250ms cubic-bezier(0.27, 0.01, 0.38, 1.06);
-}
-
-.form-control:hover {
-  border-color: #b3bdcc;
-}
-
-.form-control:focus {
-  color: #495057;
-  background-color: #fff;
-  border-color: var(--drokavoka-bleu);
-  box-shadow: 0 0.313rem 0.719rem rgba(var(--drokavoka-bleu-rgb), 0.1), 0 0.156rem 0.125rem rgba(var(--drokavoka-bleu-rgb), 0.06);
-}
-
-.form-control:focus:hover {
-  border-color: var(--drokavoka-bleu);
-}
-
-.form-control::placeholder {
-  color: #868e96;
-}
-
-.form-control:disabled,
-.form-control[readonly] {
-  background-color: #f5f6f7;
-}
-
-.form-control:disabled:hover,
-.form-control[readonly]:hover {
-  border-color: #e1e5eb;
-  cursor: not-allowed;
-}
-
-.form-control[readonly]:not(:disabled):focus {
-  box-shadow: none;
-  border-color: #e1e5eb;
-}
-.custom-radio .custom-control-input:checked~.custom-control-label::before {
-  background-color: var(--drokavoka-bleu);
-}
-.custom-radio .custom-control-input:checked~.custom-control-label::before {
-  background-color: var(--drokavoka-bleu);
-}
-.custom-radio input[type="radio"]:focus + label::before{
-  box-shadow:0 0 0 1px var(--drokavoka-white), 0 0 0 0.2rem rgba(var(--drokavoka-bleu-rgb),.25);
-}
-.bootstrap-select button{
-  border-radius:0;
-  border-color:#e1e5eb;
-  background: none;
-  color:#5A6169;
-}
-.bootstrap-select > .dropdown-toggle.bs-placeholder{
-  color:#5A6169;
-}
-    /*form control end*/
+    .form-control {
+      height: auto;
+      padding: 0.4375rem 0.75rem;
+      font-size: 0.8125rem;
+      line-height: 1.5;
+      color: #495057;
+      background-color: #fff;
+      border: 1px solid #e1e5eb;
+      font-weight: 300;
+      will-change: border-color, box-shadow;
+      border-radius: 0rem;
+      box-shadow: none;
+      transition: box-shadow 250ms cubic-bezier(0.27, 0.01, 0.38, 1.06), border 250ms cubic-bezier(0.27, 0.01, 0.38, 1.06);
+    }
+    
+    .form-control:hover {
+      border-color: #b3bdcc;
+    }
+    
+    .form-control:focus {
+      color: #495057;
+      background-color: #fff;
+      border-color: var(--drokavoka-bleu);
+      box-shadow: 0 0.313rem 0.719rem rgba(var(--drokavoka-bleu-rgb), 0.1), 0 0.156rem 0.125rem rgba(var(--drokavoka-bleu-rgb), 0.06);
+    }
+    
+    .form-control:focus:hover {
+      border-color: var(--drokavoka-bleu);
+    }
+    
+    .form-control::placeholder {
+      color: #868e96;
+    }
+    
+    .form-control:disabled,
+    .form-control[readonly] {
+      background-color: #f5f6f7;
+    }
+    
+    .form-control:disabled:hover,
+    .form-control[readonly]:hover {
+      border-color: #e1e5eb;
+      cursor: not-allowed;
+    }
+    
+    .form-control[readonly]:not(:disabled):focus {
+      box-shadow: none;
+      border-color: #e1e5eb;
+    }
+    .custom-radio .custom-control-input:checked~.custom-control-label::before {
+      background-color: var(--drokavoka-bleu);
+    }
+    .custom-radio .custom-control-input:checked~.custom-control-label::before {
+      background-color: var(--drokavoka-bleu);
+    }
+    .custom-radio input[type="radio"]:focus + label::before{
+      box-shadow:0 0 0 1px var(--drokavoka-white), 0 0 0 0.2rem rgba(var(--drokavoka-bleu-rgb),.25);
+    }
+    .bootstrap-select button{
+      border-radius:0;
+      border-color:#e1e5eb;
+      background: none;
+      color:#5A6169;
+    }
+    .bootstrap-select > .dropdown-toggle.bs-placeholder{
+      color:#5A6169;
+    }
+        /*form control end*/
     /*card start*/
 .card {
   background-color: #fff;
@@ -536,6 +537,11 @@ select.form-control-lg:not([size]):not([multiple]),
 
 .dashboard .main-navbar .navbar .notifications {
   position: relative;
+}
+.dashboard .main-navbar .notifications-container{
+  max-height:300px;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 .dashboard .main-navbar .navbar .notifications .badge {
   position: absolute;
@@ -810,7 +816,7 @@ select.form-control-lg:not([size]):not([multiple]),
   /* padding: 0.75rem 1.0625rem; */
 }
 
-.dashboard .main-navbar__search input.form-control,
+/* .dashboard .main-navbar__search input.form-control,
 .dashboard .main-sidebar__search input.form-control {
   border: none;
   font-size: 0.8125rem;
@@ -822,7 +828,7 @@ select.form-control-lg:not([size]):not([multiple]),
 .dashboard .main-sidebar__search input.form-control:hover,
 .dashboard .main-sidebar__search input.form-control:focus {
   box-shadow: none;
-}
+} */
     /*sidebar end*/
     /*main content start*/
 .main-content>.main-content-container.container-fluid {
